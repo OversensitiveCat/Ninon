@@ -2,26 +2,22 @@ import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
 
 import enterTransition from './transitions/basic_enter'
+import quickTransition from './transitions/basic_enter_home'
 import leaveTransition from './transitions/basic_leave'
 import homeEnter from './transitions/home_enter'
-import homeOnce from './transitions/home_once'
 import mobileHeight from './transitions/mobileHeight'
 import mobileHeightProject from './transitions/mobileHeightProject'
+import homeOnce from './transitions/once/home_once'
+import projectOnce from './transitions/once/project_once'
 import projectEnter from './transitions/project_enter'
-import projectOnce from './transitions/project_once'
-import quickTransition from './transitions/quick_enter'
-import { animations, setLenis, navMobile } from './views/global_views'
+import animations from './views/global/animations'
+import setLenis from './views/global/lenis'
+import navMobile from './views/global/navMobile'
 import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.afterEnter((data) => {
-  console.log(data.next.namespace)
-  animations(), setLenis(), navMobile()
-})
-
-barba.hooks.afterOnce((data) => {
-  console.log(data.next.namespace)
+barba.hooks.afterEnter(() => {
   animations(), setLenis(), navMobile()
 })
 
@@ -71,8 +67,8 @@ barba.init({
       enter() {
         enterTransition()
       },
-      afterEnter() {
-        projectEnter()
+      afterEnter({ next }) {
+        projectEnter(next.container)
       },
       beforeOnce() {
         mobileHeightProject()

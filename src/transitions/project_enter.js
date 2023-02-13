@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-const projectEnter = () => {
+const projectEnter = (container) => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
   let letters = new SplitType('.heading1-project', {
     types: 'chars',
@@ -53,6 +53,10 @@ const projectEnter = () => {
       },
       '<'
     )
+
+  let video = container.querySelector('video')
+  video.muted = true
+  video.play()
 }
 
 export default projectEnter

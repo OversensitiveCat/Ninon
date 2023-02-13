@@ -1,59 +1,9 @@
-import Lenis from '@studio-freight/lenis'
 import { gsap } from 'gsap'
-import { Observer } from 'gsap/Observer'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
 
-gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
-
-const setLenis = () => {
-  const lenis = new Lenis({
-    duration: 1.4,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-    infinite: false,
-  })
-
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  requestAnimationFrame(raf)
-}
-
-const navMobile = () => {
-  let tl = gsap.timeline({ paused: true })
-  tl.to('.nav-page-mobile', { zIndex: 3, duration: 0 })
-    .from('.nav-page-mobile', { height: '0%', duration: 0.5 }, '<')
-    .to('.close-line1', { duration: 1, autoAlpha: 1, rotate: 45 }, '<')
-    .to('.close-line2', { duration: 1, autoAlpha: 1, rotate: -45 }, '<')
-    .from(
-      '.nav-item-mobile',
-      {
-        autoAlpha: 0,
-        duration: 0.5,
-        stagger: 0.2,
-        yPercent: 60,
-      },
-      '-=0.4'
-    )
-
-  document.querySelector('.nav-open').addEventListener('click', () => {
-    tl.play()
-    document.querySelector('.body').style.overflowY = 'hidden'
-  })
-  document.querySelector('.nav-close').addEventListener('click', () => {
-    tl.reverse()
-    document.querySelector('.body').style.overflowY = 'scroll'
-  })
-}
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const animations = () => {
   function myAnimations() {
@@ -235,4 +185,4 @@ const animations = () => {
   gsap.delayedCall(1, myAnimations)
 }
 
-export { animations, setLenis, navMobile }
+export default animations
