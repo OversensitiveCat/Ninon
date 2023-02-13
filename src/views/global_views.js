@@ -1,9 +1,9 @@
-import { Lenis } from '@studio-freight/lenis'
+import Lenis from '@studio-freight/lenis'
 import { gsap } from 'gsap'
 import { Observer } from 'gsap/Observer'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitType } from 'split-type'
+import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
 
@@ -61,8 +61,7 @@ const animations = () => {
     types: 'chars',
     tagName: 'span',
   })
-  // const titles = gsap.utils.toArray('.content-wrapper [split-letters]')
-  titles.forEach((title) => {
+  titles.elements.forEach((title) => {
     title.style.whiteSpace = 'nowrap'
     if (title.dataset.anim == 'rotated-title') {
       let letters = title.querySelectorAll('.char')
@@ -122,7 +121,7 @@ const animations = () => {
       tagName: 'span',
     })
     // const words = gsap.utils.toArray('.word')
-    words.forEach((word) => {
+    words.words.forEach((word) => {
       let tl = gsap.timeline({ paused: true })
       tl.from(word, {
         autoAlpha: 0,

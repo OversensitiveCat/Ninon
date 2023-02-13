@@ -1,8 +1,9 @@
+import barba from '@barba/core'
 import { gsap } from 'gsap'
 import { Observer } from 'gsap/Observer'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SplitType } from 'split-type'
+import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
 
@@ -15,8 +16,8 @@ const home = () => {
       tagName: 'span',
     })
     // const letters = gsap.utils.toArray('.eclater .char')
-    letters.forEach((letter) => {
-      let index = letters.indexOf(letter)
+    letters.chars.forEach((letter) => {
+      let index = letters.chars.indexOf(letter)
       if (index % 2 == 0) {
         gsap.to(letter, {
           scrollTrigger: {
@@ -95,22 +96,16 @@ const home = () => {
     }
 
     function linkOne() {
-      window.location.href =
-        'ninons-radical-site-87f64f.webflow.io/programme-2023'
-      //barba.go(href= 'ninons-radical-site-87f64f.webflow.io/programme-2023')
+      barba.go('./programme-2023')
     }
     function linkTwo() {
-      window.location.href = 'ninons-radical-site-87f64f.webflow.io/royaumont'
-      //barba.go(href= 'ninons-radical-site-87f64f.webflow.io/royaumont')
+      barba.go('./royaumont')
     }
     function linkThree() {
-      window.location.href = 'ninons-radical-site-87f64f.webflow.io/durand'
-      //barba.go(href= 'ninons-radical-site-87f64f.webflow.io/durand')
+      barba.go('./durand')
     }
     function linkFour() {
-      window.location.href =
-        'ninons-radical-site-87f64f.webflow.io/musique-de-chambre'
-      //barba.go(href= 'ninons-radical-site-87f64f.webflow.io/musique-de-chambre')
+      barba.go('./musique-de-chambre')
     }
     const button = document.querySelector('.discover-button')
     button.addEventListener('click', linkOne)

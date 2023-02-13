@@ -1,54 +1,76 @@
-import { barba } from '@barba/core'
-import { barbaPrefetch } from '@barba/prefetch'
+import barba from '@barba/core'
+import barbaPrefetch from '@barba/prefetch'
 
-import { homeEnter } from './transitions/home_enter'
-import { projectEnter } from './transitions/project_enter'
+import homeEnter from './transitions/home_enter'
+import projectEnter from './transitions/project_enter'
 import { animations, setLenis, navMobile, footer } from './views/global_views'
 import home from './views/home'
 import mobileHeightProject from './views/mobileHeightProject'
 
-mobileHeightProject()
-
 barba.use(barbaPrefetch)
 
-barba.hooks.beforeEnter((data) => {
+barba.hooks.enter((data) => {
   console.log(data.next.namespace)
-  animations()
-  setLenis()
-  navMobile()
-  footer()
+  animations(), setLenis(), navMobile(), footer()
 })
 
-barba.hooks.beforeOnce((data) => {
+barba.hooks.once((data) => {
   console.log(data.next.namespace)
-  animations()
-  setLenis()
-  navMobile()
-  footer()
+  animations(), setLenis(), navMobile(), footer()
 })
 
 barba.init({
+  debug: true,
   views: [
     {
       namespace: 'home',
-      afterEnter() {
+      enter() {
         home()
+      },
+    },
+    {
+      namespace: 'programme',
+      enter() {
+        mobileHeightProject()
+      },
+    },
+    {
+      namespace: 'royaumont',
+      enter() {
+        mobileHeightProject()
+      },
+    },
+    {
+      namespace: 'durand',
+      enter() {
+        mobileHeightProject()
+      },
+    },
+    {
+      namespace: 'mdc',
+      enter() {
+        mobileHeightProject()
       },
     },
   ],
   transitions: [
     {
-      sync: true,
-      name: 'enter-home',
+      name: 'home',
       to: { namespace: ['home'] },
-      afterEnter({ next }) {
-        homeEnter(next.container)
+      once() {
+        homeEnter()
+      },
+      enter() {
+        homeEnter()
       },
     },
     {
-      sync: true,
-      afterEnter({ next }) {
-        projectEnter(next.container)
+      name: 'basic enter',
+      once() {
+        projectEnter()
+      },
+      enter() {
+        projectEnter()
       },
     },
   ],
