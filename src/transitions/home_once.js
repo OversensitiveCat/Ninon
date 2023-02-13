@@ -1,21 +1,17 @@
 import { gsap } from 'gsap'
 
-const homeEnter = () => {
+const homeOnce = () => {
   gsap.set('.accueil > *', { autoAlpha: 1 })
   const letters = gsap.utils.toArray('.accueil .cls-1, .accueil .cls-3')
 
   let tl = gsap.timeline()
-  tl.from(
-    letters,
-    {
-      autoAlpha: 0,
-      duration: 0.2,
-      stagger: { amount: 1.2 },
-      scale: 0.2,
-      yPercent: -20,
-    },
-    '+=1.4'
-  )
+  tl.from(letters, {
+    autoAlpha: 0,
+    duration: 0.2,
+    stagger: { amount: 1.2 },
+    scale: 0.2,
+    yPercent: -20,
+  })
     .from(
       '.image-accueil',
       { autoAlpha: 0, yPercent: 70, duration: 1.6, scale: 0.9 },
@@ -34,4 +30,4 @@ const homeEnter = () => {
     )
 }
 
-export default homeEnter
+export default homeOnce

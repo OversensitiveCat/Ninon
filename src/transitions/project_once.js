@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-const projectEnter = () => {
+const projectOnce = () => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
   let letters = new SplitType('.heading1-project', {
     types: 'chars',
@@ -12,17 +12,13 @@ const projectEnter = () => {
     tagName: 'span',
   })
   let tl = gsap.timeline()
-  tl.from(
-    letters.chars,
-    {
-      autoAlpha: 0,
-      scale: 0.2,
-      yPercent: -20,
-      duration: 0.2,
-      stagger: { amount: 0.8 },
-    },
-    '+=1.4'
-  )
+  tl.from(letters.chars, {
+    autoAlpha: 0,
+    scale: 0.2,
+    yPercent: -20,
+    duration: 0.2,
+    stagger: { amount: 0.8 },
+  })
     .from(
       '.project-number-hero',
       {
@@ -55,4 +51,4 @@ const projectEnter = () => {
     )
 }
 
-export default projectEnter
+export default projectOnce
