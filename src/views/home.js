@@ -259,10 +259,10 @@ const home = () => {
     mm.add('(max-width: 991px)', () => {
       // HAMBURGER COLOR
       const goBlack = () => {
-        gsap.to('.open-line1, .open-line2', { backgroundColor: '#141313' })
+        gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#141313' })
       }
       const goWhite = () => {
-        gsap.to('.open-line1, .open-line2', { backgroundColor: '#f7f4f4' })
+        gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#f7f4f4' })
       }
 
       ScrollTrigger.create({

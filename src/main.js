@@ -17,8 +17,8 @@ import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.afterEnter(() => {
-  animations(), setLenis(), navMobile()
+barba.hooks.afterEnter((data) => {
+  animations(), setLenis(), navMobile(data)
 })
 
 barba.init({
