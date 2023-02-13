@@ -5,60 +5,36 @@ import enterTransition from './transitions/basic_enter'
 import leaveTransition from './transitions/basic_leave'
 import homeEnter from './transitions/home_enter'
 import homeOnce from './transitions/home_once'
+import mobileHeight from './transitions/mobileHeight'
+import mobileHeightProject from './transitions/mobileHeightProject'
 import projectEnter from './transitions/project_enter'
 import projectOnce from './transitions/project_once'
 import quickTransition from './transitions/quick_enter'
-// import { animations, setLenis, navMobile, footer } from './views/global_views'
-// import home from './views/home'
-// import mobileHeightProject from './views/mobileHeightProject'
+import { animations, setLenis, navMobile } from './views/global_views'
+import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-// barba.hooks.enter((data) => {
-//   console.log(data.next.namespace)
-//   animations(), setLenis(), navMobile(), footer()
-// })
+barba.hooks.afterEnter((data) => {
+  console.log(data.next.namespace)
+  animations(), setLenis(), navMobile()
+})
 
-// barba.hooks.once((data) => {
-//   console.log(data.next.namespace)
-//   animations(), setLenis(), navMobile(), footer()
-// })
+barba.hooks.afterOnce((data) => {
+  console.log(data.next.namespace)
+  animations(), setLenis(), navMobile()
+})
 
 barba.init({
   debug: true,
-
-  // views: [
-  //   {
-  //     namespace: 'home',
-  //     beforeEnter() {
-  //       home()
-  //     },
-  //   },
-  //   {
-  //     namespace: 'programme',
-  //     beforeEnter() {
-  //       mobileHeightProject()
-  //     },
-  //   },
-  //   {
-  //     namespace: 'royaumont',
-  //     beforeEnter() {
-  //       mobileHeightProject()
-  //     },
-  //   },
-  //   {
-  //     namespace: 'durand',
-  //     beforeEnter() {
-  //       mobileHeightProject()
-  //     },
-  //   },
-  //   {
-  //     namespace: 'mdc',
-  //     beforeEnter() {
-  //       mobileHeightProject()
-  //     },
-  //   },
-  // ],
+  views: [
+    {
+      namespace: 'home',
+      beforeEnter() {
+        home()
+      },
+    },
+  ],
   transitions: [
     {
       name: 'home',
@@ -67,11 +43,17 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
+      beforeEnter() {
+        mobileHeight()
+      },
       enter() {
         quickTransition()
       },
       afterEnter() {
         homeEnter()
+      },
+      beforeOnce() {
+        mobileHeight()
       },
       once() {
         homeOnce()
@@ -83,11 +65,17 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
+      beforeEnter() {
+        mobileHeightProject()
+      },
       enter() {
         enterTransition()
       },
       afterEnter() {
         projectEnter()
+      },
+      beforeOnce() {
+        mobileHeightProject()
       },
       once() {
         projectOnce()

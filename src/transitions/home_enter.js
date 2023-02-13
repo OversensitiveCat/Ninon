@@ -14,7 +14,7 @@ const homeEnter = () => {
       scale: 0.2,
       yPercent: -20,
     },
-    '+=1.4'
+    '+=0.7'
   )
     .from(
       '.image-accueil',
