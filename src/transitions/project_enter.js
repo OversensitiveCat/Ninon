@@ -1,8 +1,13 @@
 import { gsap } from 'gsap'
+import { SplitType } from 'split-type'
 
 const projectEnter = () => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
-  const letters = gsap.utils.toArray('.heading1-project .char')
+  let letters = new SplitType('.heading1-project .char', {
+    types: 'chars',
+    tagName: 'span',
+  })
+  // const letters = gsap.utils.toArray('.heading1-project .char')
   let tl = gsap.timeline()
   tl.from(letters, {
     autoAlpha: 0,

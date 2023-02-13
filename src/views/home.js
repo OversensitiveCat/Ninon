@@ -10,11 +10,11 @@ const home = () => {
   let mm = gsap.matchMedia()
   mm.add('(min-width: 992px)', () => {
     // ECLATER
-    let split = new SplitType('.eclater', {
+    let letters = new SplitType('.eclater', {
       types: 'chars',
       tagName: 'span',
     })
-    const letters = gsap.utils.toArray('.eclater .char')
+    // const letters = gsap.utils.toArray('.eclater .char')
     letters.forEach((letter) => {
       let index = letters.indexOf(letter)
       if (index % 2 == 0) {

@@ -1,4 +1,4 @@
-import Lenis from '@studio-freight/lenis'
+import { Lenis } from '@studio-freight/lenis'
 import { gsap } from 'gsap'
 import { Observer } from 'gsap/Observer'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
@@ -6,13 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitType } from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
-
-const split = () => {
-  let splitLetters = new SplitType('[split-letters]', {
-    types: 'chars',
-    tagName: 'span',
-  })
-}
 
 const setLenis = () => {
   const lenis = new Lenis({
@@ -64,7 +57,11 @@ const navMobile = () => {
 
 const animations = () => {
   // SPLIT HEADINGS
-  const titles = gsap.utils.toArray('.content-wrapper [split-letters]')
+  let titles = new SplitType('.content-wrapper [split-letters]', {
+    types: 'chars',
+    tagName: 'span',
+  })
+  // const titles = gsap.utils.toArray('.content-wrapper [split-letters]')
   titles.forEach((title) => {
     title.style.whiteSpace = 'nowrap'
     if (title.dataset.anim == 'rotated-title') {
@@ -120,11 +117,11 @@ const animations = () => {
   let mm = gsap.matchMedia()
   mm.add('(min-width: 992px)', () => {
     // SPLIT TEXT
-    let splitWords = new SplitType('[split-words]', {
+    let words = new SplitType('[split-words]', {
       types: 'words',
       tagName: 'span',
     })
-    const words = gsap.utils.toArray('.word')
+    // const words = gsap.utils.toArray('.word')
     words.forEach((word) => {
       let tl = gsap.timeline({ paused: true })
       tl.from(word, {
@@ -240,4 +237,4 @@ const footer = () => {
   })
 }
 
-export { split, animations, setLenis, navMobile, footer }
+export { animations, setLenis, navMobile, footer }

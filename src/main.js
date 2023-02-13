@@ -1,18 +1,9 @@
-import barba from '@barba/core'
-import barbaPrefetch from '@barba/prefetch'
+import { barba } from '@barba/core'
+import { barbaPrefetch } from '@barba/prefetch'
 
-// transitions
-import homeEnter from './transitions/home_enter'
-import projectEnter from './transitions/project_enter'
-
-// views
-import {
-  split,
-  animations,
-  setLenis,
-  navMobile,
-  footer,
-} from './views/global_views'
+import { homeEnter } from './transitions/home_enter'
+import { projectEnter } from './transitions/project_enter'
+import { animations, setLenis, navMobile, footer } from './views/global_views'
 import home from './views/home'
 import mobileHeightProject from './views/mobileHeightProject'
 
@@ -22,7 +13,6 @@ barba.use(barbaPrefetch)
 
 barba.hooks.beforeEnter((data) => {
   console.log(data.next.namespace)
-  split()
   animations()
   setLenis()
   navMobile()
@@ -31,7 +21,6 @@ barba.hooks.beforeEnter((data) => {
 
 barba.hooks.beforeOnce((data) => {
   console.log(data.next.namespace)
-  split()
   animations()
   setLenis()
   navMobile()
