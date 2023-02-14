@@ -1,6 +1,8 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
+import toogleNav from '../../views/nav_mobile/toogleNav'
+
 const projectOnce = () => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
   let letters = new SplitType('.heading1-project', {
@@ -49,6 +51,9 @@ const projectOnce = () => {
       },
       '<'
     )
+  let hamburger = document.querySelector('.hamburger')
+  hamburger.addEventListener('click', toogleNav)
+  console.log('add click ham once')
 }
 
 export default projectOnce

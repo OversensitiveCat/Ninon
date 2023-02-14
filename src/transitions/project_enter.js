@@ -1,6 +1,8 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
+import toogleNav from '../views/nav_mobile/toogleNav'
+
 const projectEnter = (container) => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
   let letters = new SplitType('.heading1-project', {
@@ -11,7 +13,13 @@ const projectEnter = (container) => {
     types: 'chars',
     tagName: 'span',
   })
-  let tl = gsap.timeline()
+  let tl = gsap.timeline({
+    onComplete: () => {
+      let hamburger = document.querySelector('.hamburger')
+      hamburger.addEventListener('click', toogleNav())
+      console.log('add click ham enter')
+    },
+  })
   tl.from(
     letters.chars,
     {

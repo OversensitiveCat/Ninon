@@ -1,9 +1,15 @@
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
+import toogleNav from '../views/nav_mobile/toogleNav'
+
 gsap.registerPlugin(ScrollToPlugin)
 
 const leaveTransition = (done) => {
+  let hamburger = document.querySelector('.hamburger')
+  hamburger.removeEventListener('click', toogleNav)
+  console.log('remove ?')
+
   const shape1 =
     'M 469.539 263.9868 q -235.539 0 -469.539 0 L 0 104 c 226 -93 314 -26 469.539 0 V 263.9868 z z'
   const shape2 =
@@ -27,6 +33,7 @@ const leaveTransition = (done) => {
       ease: 'Power2.easeOut',
       duration: 0.8,
     })
+
   return leave
 }
 

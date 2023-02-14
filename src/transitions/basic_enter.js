@@ -25,7 +25,6 @@ const enterTransition = () => {
       duration: 0,
     })
     .to('.path-container', { zIndex: -5 })
-  return enter
 }
 
 export default enterTransition

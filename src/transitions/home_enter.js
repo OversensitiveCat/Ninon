@@ -1,10 +1,18 @@
 import { gsap } from 'gsap'
 
+import toogleNav from '../views/nav_mobile/toogleNav'
+
 const homeEnter = () => {
   gsap.set('.accueil > *', { autoAlpha: 1 })
   const letters = gsap.utils.toArray('.accueil .cls-1, .accueil .cls-3')
 
-  let tl = gsap.timeline()
+  let tl = gsap.timeline({
+    onComplete: () => {
+      let hamburger = document.querySelector('.hamburger')
+      hamburger.addEventListener('click', toogleNav)
+      console.log('add click ham enter')
+    },
+  })
   tl.from(
     letters,
     {
