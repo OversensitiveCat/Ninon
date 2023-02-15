@@ -12,6 +12,7 @@ import projectOnce from './transitions/once/project_once'
 import projectEnter from './transitions/project_enter'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
+import setContact from './views/global/set_contact'
 import setNav from './views/global/set_nav'
 import home from './views/home'
 
@@ -28,6 +29,9 @@ barba.init({
       namespace: 'home',
       beforeEnter() {
         home()
+      },
+      afterEnter() {
+        setContact()
       },
     },
   ],

@@ -158,7 +158,7 @@ const animations = () => {
           0
         )
         .from(
-          '.contact-item, .change-language',
+          '.contact-item-footer, .change-language',
           {
             autoAlpha: 0,
             yPercent: 60,
