@@ -12,14 +12,13 @@ import projectOnce from './transitions/once/project_once'
 import projectEnter from './transitions/project_enter'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
+import setNav from './views/global/set_nav'
 import home from './views/home'
-// import navMobile from './views/navMobile'
-// import navMobileHome from './views/navMobileHome'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.afterEnter(() => {
-  animations(), setLenis()
+barba.hooks.afterEnter((data) => {
+  animations(), setLenis(), setNav(data)
 })
 
 barba.init({
@@ -30,40 +29,7 @@ barba.init({
       beforeEnter() {
         home()
       },
-      // afterEnter() {
-      //   navMobileHome()
-      // },
     },
-    // {
-    //   namespace: 'programme',
-    //   afterEnter() {
-    //     navMobile()
-    //   },
-    // },
-    // {
-    //   namespace: 'royaumont',
-    //   afterEnter() {
-    //     navMobile()
-    //   },
-    // },
-    // {
-    //   namespace: 'durand',
-    //   afterEnter() {
-    //     navMobile()
-    //   },
-    // },
-    // {
-    //   namespace: 'mdc',
-    //   afterEnter() {
-    //     navMobile()
-    //   },
-    // },
-    // {
-    //   namespace: 'archives',
-    //   afterEnter() {
-    //     navMobile()
-    //   },
-    // },
   ],
   transitions: [
     {

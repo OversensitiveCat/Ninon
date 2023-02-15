@@ -1,12 +1,6 @@
 import { gsap } from 'gsap'
 
-import toogleNav from '../../views/nav_mobile/toogleNav'
-
 const homeOnce = () => {
-  let hamburger = document.querySelector('.hamburger')
-  hamburger.addEventListener('click', toogleNav)
-  console.log('add click ham once')
-
   gsap.set('.accueil > *', { autoAlpha: 1 })
   const letters = gsap.utils.toArray('.accueil .cls-1, .accueil .cls-3')
 
