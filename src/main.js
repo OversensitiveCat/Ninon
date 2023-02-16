@@ -19,7 +19,7 @@ import home from './views/home'
 barba.use(barbaPrefetch)
 
 barba.hooks.afterEnter((data) => {
-  animations(), setLenis(), setNav(data)
+  animations(), setLenis(), setNav(data), setContact()
 })
 
 barba.init({
@@ -29,9 +29,6 @@ barba.init({
       namespace: 'home',
       beforeEnter() {
         home()
-      },
-      afterEnter() {
-        setContact()
       },
     },
   ],
