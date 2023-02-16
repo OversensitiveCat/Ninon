@@ -13,13 +13,13 @@ import projectEnter from './transitions/project_enter'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
 import setContact from './views/global/set_contact'
-import setNav from './views/global/set_nav'
+import setNavMob from './views/global/set_navMob'
 import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.afterEnter((data) => {
-  animations(), setLenis(), setNav(data), setContact()
+barba.hooks.afterEnter(() => {
+  animations(), setLenis(), setNavMob(), setContact()
 })
 
 barba.init({

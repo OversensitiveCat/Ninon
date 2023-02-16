@@ -5,9 +5,6 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollToPlugin)
 
 const setContact = () => {
-  let agents = gsap.utils.toArray('.agent-container')
-  let agentUn = agents[0].querySelectorAll('*')
-  let agentDeux = agents[1].querySelectorAll('*')
   let letters = new SplitType('.contact-heading', {
     types: 'chars',
     tagName: 'span',
@@ -19,11 +16,11 @@ const setContact = () => {
   let tlContact = gsap.timeline({ paused: true })
   tlContact
     .to('.section-contact', {
-      zIndex: 5,
+      zIndex: 6,
       duration: 0,
     })
     .to(
-      '.contact-card-container',
+      '.contact-card-container, .nav-bar-project',
       { backgroundColor: '#141313', duration: 0.4 },
       '<'
     )
@@ -64,14 +61,18 @@ const setContact = () => {
       },
       '-=0.2'
     )
-    .from(agentUn, {
-      autoAlpha: 0,
-      yPercent: 40,
-      duration: 0.4,
-      stagger: { amount: 0.5 },
-    })
     .from(
-      agentDeux,
+      '.agent1 > *',
+      {
+        autoAlpha: 0,
+        yPercent: 40,
+        duration: 0.4,
+        stagger: { amount: 0.5 },
+      },
+      '-=0.2'
+    )
+    .from(
+      '.agent2 > *',
       {
         autoAlpha: 0,
         yPercent: 40,
@@ -109,20 +110,43 @@ const setContact = () => {
   })
 
   function set() {
-    console.log('contact is set')
-    let contactButton = document.querySelector('.nav-item-contact')
-    let closeButton = document.querySelector('.close-button')
-    contactButton.addEventListener('click', () => {
-      tlContact.play()
+    let mm = gsap.matchMedia()
+    mm.add('(min-width: 992px)', () => {
+      console.log('contact is set')
+      let contactButton = document.querySelector('.nav-item-contact')
+      let closeButton = document.querySelector('.close-button')
+      contactButton.addEventListener('click', () => {
+        tlContact.play()
+      })
+      closeButton.addEventListener('click', () => {
+        tlContact.reverse()
+      })
+      closeButton.addEventListener('mouseenter', () => {
+        hoverButton.play()
+      })
+      closeButton.addEventListener('mouseleave', () => {
+        hoverButton.reverse()
+      })
     })
-    closeButton.addEventListener('click', () => {
-      tlContact.reverse()
-    })
-    closeButton.addEventListener('mouseenter', () => {
-      hoverButton.play()
-    })
-    closeButton.addEventListener('mouseleave', () => {
-      hoverButton.reverse()
+    mm.add('(max-width: 991px)', () => {
+      console.log('contact mobile is set')
+
+      let contactButtonMobile = document.querySelector(
+        '.nav-item-contact-mobile'
+      )
+      let closeButton = document.querySelector('.close-button')
+      contactButtonMobile.addEventListener('click', () => {
+        tlContact.play()
+      })
+      closeButton.addEventListener('click', () => {
+        tlContact.reverse()
+      })
+      closeButton.addEventListener('mouseenter', () => {
+        hoverButton.play()
+      })
+      closeButton.addEventListener('mouseleave', () => {
+        hoverButton.reverse()
+      })
     })
   }
   return gsap.delayedCall(1, set)
