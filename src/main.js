@@ -1,12 +1,16 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
 
+import agendaEnter from './transitions/agenda_enter'
+import archivesEnter from './transitions/archives_enter'
 import enterTransition from './transitions/basic_enter'
 import quickTransition from './transitions/basic_enter_home'
 import leaveTransition from './transitions/basic_leave'
 import homeEnter from './transitions/home_enter'
-import mobileHeight from './transitions/mobileHeight'
-import mobileHeightProject from './transitions/mobileHeightProject'
+import mobileHeightHome from './transitions/mobileHeight'
+import mobileHeight from './transitions/mobileHeightProject'
+import agendaOnce from './transitions/once/agenda_once'
+import archivesOnce from './transitions/once/archives_once'
 import homeOnce from './transitions/once/home_once'
 import projectOnce from './transitions/once/project_once'
 import projectEnter from './transitions/project_enter'
@@ -41,7 +45,7 @@ barba.init({
         leaveTransition(done)
       },
       beforeEnter() {
-        mobileHeight()
+        mobileHeightHome()
       },
       enter() {
         quickTransition()
@@ -50,20 +54,20 @@ barba.init({
         homeEnter()
       },
       beforeOnce() {
-        mobileHeight()
+        mobileHeightHome()
       },
       once() {
         homeOnce()
       },
     },
     {
-      name: 'basic-transition',
+      name: 'projects',
       leave() {
         const done = this.async()
         leaveTransition(done)
       },
       beforeEnter() {
-        mobileHeightProject()
+        mobileHeight()
       },
       enter() {
         enterTransition()
@@ -72,10 +76,56 @@ barba.init({
         projectEnter(next.container)
       },
       beforeOnce() {
-        mobileHeightProject()
+        mobileHeight()
       },
       once() {
         projectOnce()
+      },
+    },
+    {
+      name: 'agenda',
+      to: { namespace: ['agenda'] },
+      leave() {
+        const done = this.async()
+        leaveTransition(done)
+      },
+      beforeEnter() {
+        mobileHeight()
+      },
+      enter() {
+        enterTransition()
+      },
+      afterEnter() {
+        agendaEnter()
+      },
+      beforeOnce() {
+        mobileHeight()
+      },
+      once() {
+        agendaOnce()
+      },
+    },
+    {
+      name: 'archives',
+      to: { namespace: ['archives'] },
+      leave() {
+        const done = this.async()
+        leaveTransition(done)
+      },
+      beforeEnter() {
+        mobileHeight()
+      },
+      enter() {
+        enterTransition()
+      },
+      afterEnter({ next }) {
+        archivesEnter(next.container)
+      },
+      beforeOnce() {
+        mobileHeight()
+      },
+      once({ next }) {
+        archivesOnce(next.container)
       },
     },
   ],

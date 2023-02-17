@@ -1,4 +1,4 @@
-const mobileHeight = () => {
+const mobileHeightHome = () => {
   const setHeight = () => {
     document.querySelector('#accueil').style.height = window.innerHeight + 'px'
   }
@@ -8,4 +8,4 @@ const mobileHeight = () => {
   }
 }
 
-export default mobileHeight
+export default mobileHeightHome

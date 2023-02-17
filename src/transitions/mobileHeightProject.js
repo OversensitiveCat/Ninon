@@ -1,4 +1,4 @@
-const mobileHeightProject = () => {
+const mobileHeight = () => {
   const setHeight = () => {
     document.querySelector('#hero-section').style.height =
       window.innerHeight + 'px'
@@ -9,4 +9,4 @@ const mobileHeightProject = () => {
   }
 }
 
-export default mobileHeightProject
+export default mobileHeight
