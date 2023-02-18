@@ -3,8 +3,6 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
 
-import Event from './hover'
-
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const animations = () => {
@@ -183,8 +181,22 @@ const animations = () => {
         onEnter: () => tl.play(),
       })
 
-      const redHover = new Event('.contact-item-footer')
-      redHover.hover()
+      let footerLinksOut = gsap.utils.toArray('.contact-item-footer')
+      footerLinksOut.forEach((item) => {
+        let arrow = item.querySelector('.link-arrow')
+        let tl = gsap.timeline({ paused: true })
+        tl.to(arrow, { yPercent: -20, xPercent: 20, scale: 1.1, duration: 0.2 })
+        item.addEventListener('mouseenter', () => tl.play())
+        item.addEventListener('mouseleave', () => tl.reverse())
+      })
+      let footerLinksNav = gsap.utils.toArray('.nav-item-footer')
+      footerLinksNav.forEach((item) => {
+        let link = item.querySelector('.nav-text-footer')
+        let tl = gsap.timeline({ paused: true })
+        tl.to(link, { color: '#b7b7b7', duration: 0.1 })
+        item.addEventListener('mouseenter', () => tl.play())
+        item.addEventListener('mouseleave', () => tl.reverse())
+      })
     })
   }
   gsap.delayedCall(1, myAnimations)
