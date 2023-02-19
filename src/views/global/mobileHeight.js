@@ -1,6 +1,6 @@
 const mobileHeight = () => {
   const setHeight = () => {
-    document.querySelector('#hero-section').style.height =
+    document.querySelector('.section-hero').style.height =
       window.innerHeight + 'px'
   }
   let deviceWidth = window.matchMedia('(max-width: 991px)')

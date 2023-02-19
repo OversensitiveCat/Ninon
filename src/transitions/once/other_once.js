@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-const archivesOnce = (container) => {
+const otherOnce = (data) => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
   let letters = new SplitType('.heading1', {
     types: 'chars',
@@ -41,9 +41,14 @@ const archivesOnce = (container) => {
       '<'
     )
 
-  let video = container.querySelector('video')
-  video.muted = true
-  video.play()
+  if (data.next.namespace == 'archives') {
+    let video = data.next.container.querySelector('video')
+    video.muted = true
+    video.play()
+    return tl
+  } else {
+    return tl
+  }
 }
 
-export default archivesOnce
+export default otherOnce

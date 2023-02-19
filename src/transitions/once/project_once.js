@@ -3,7 +3,7 @@ import SplitType from 'split-type'
 
 const projectOnce = () => {
   gsap.set('#hero-section > *', { autoAlpha: 1 })
-  let letters = new SplitType('.heading1-project', {
+  let letters = new SplitType('.heading1', {
     types: 'chars',
     tagName: 'span',
   })

@@ -1,29 +1,31 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
 
-import agendaEnter from './transitions/agenda_enter'
-import archivesEnter from './transitions/archives_enter'
-import enterTransition from './transitions/basic_enter'
-import quickTransition from './transitions/basic_enter_home'
-import leaveTransition from './transitions/basic_leave'
+import enterTransition from './transitions/global/basic_enter'
+import leaveTransition from './transitions/global/basic_leave'
 import homeEnter from './transitions/home_enter'
-import mobileHeightHome from './transitions/mobileHeight'
-import mobileHeight from './transitions/mobileHeightProject'
-import agendaOnce from './transitions/once/agenda_once'
-import archivesOnce from './transitions/once/archives_once'
 import homeOnce from './transitions/once/home_once'
+import otherOnce from './transitions/once/other_once'
 import projectOnce from './transitions/once/project_once'
+import otherEnter from './transitions/other_enter'
 import projectEnter from './transitions/project_enter'
+import quickTransition from './transitions/quick_enter'
+import agenda from './views/agenda'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
+import mobileHeight from './views/global/mobileHeight'
 import setContact from './views/global/set_contact'
 import setNavMob from './views/global/set_navMob'
 import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.afterEnter(() => {
-  animations(), setLenis(), setNavMob(), setContact()
+barba.hooks.beforeEnter(() => {
+  mobileHeight()
+})
+
+barba.hooks.afterEnter((data) => {
+  animations(data), setLenis(), setNavMob(), setContact()
 })
 
 barba.init({
@@ -44,17 +46,11 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      beforeEnter() {
-        mobileHeightHome()
-      },
       enter() {
         quickTransition()
       },
       afterEnter() {
         homeEnter()
-      },
-      beforeOnce() {
-        mobileHeightHome()
       },
       once() {
         homeOnce()
@@ -66,17 +62,11 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      beforeEnter() {
-        mobileHeight()
-      },
       enter() {
         enterTransition()
       },
       afterEnter({ next }) {
         projectEnter(next.container)
-      },
-      beforeOnce() {
-        mobileHeight()
       },
       once() {
         projectOnce()
@@ -89,20 +79,16 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      beforeEnter() {
-        mobileHeight()
-      },
       enter() {
         enterTransition()
       },
-      afterEnter() {
-        agendaEnter()
+      afterEnter(data) {
+        otherEnter(data)
+        agenda()
       },
-      beforeOnce() {
-        mobileHeight()
-      },
-      once() {
-        agendaOnce()
+      once(data) {
+        otherOnce(data)
+        agenda()
       },
     },
     {
@@ -112,20 +98,31 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      beforeEnter() {
-        mobileHeight()
+      enter() {
+        enterTransition()
+      },
+      afterEnter(data) {
+        otherEnter(data)
+      },
+      once(data) {
+        otherOnce(data)
+      },
+    },
+    {
+      name: 'galerie',
+      to: { namespace: ['galerie'] },
+      leave() {
+        const done = this.async()
+        leaveTransition(done)
       },
       enter() {
         enterTransition()
       },
-      afterEnter({ next }) {
-        archivesEnter(next.container)
+      afterEnter(data) {
+        otherEnter(data)
       },
-      beforeOnce() {
-        mobileHeight()
-      },
-      once({ next }) {
-        archivesOnce(next.container)
+      once(data) {
+        otherOnce(data)
       },
     },
   ],

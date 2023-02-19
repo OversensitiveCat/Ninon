@@ -5,7 +5,7 @@ import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
-const animations = () => {
+const animations = (data) => {
   function myAnimations() {
     // SPLIT HEADINGS
     let titles = new SplitType('.content-wrapper [split-letters]', {
@@ -181,22 +181,111 @@ const animations = () => {
         onEnter: () => tl.play(),
       })
 
-      let footerLinksOut = gsap.utils.toArray('.contact-item-footer')
-      footerLinksOut.forEach((item) => {
-        let arrow = item.querySelector('.link-arrow')
-        let tl = gsap.timeline({ paused: true })
-        tl.to(arrow, { yPercent: -20, xPercent: 20, scale: 1.1, duration: 0.2 })
-        item.addEventListener('mouseenter', () => tl.play())
-        item.addEventListener('mouseleave', () => tl.reverse())
-      })
       let footerLinksNav = gsap.utils.toArray('.nav-item-footer')
       footerLinksNav.forEach((item) => {
         let link = item.querySelector('.nav-text-footer')
-        let tl = gsap.timeline({ paused: true })
-        tl.to(link, { color: '#b7b7b7', duration: 0.1 })
-        item.addEventListener('mouseenter', () => tl.play())
-        item.addEventListener('mouseleave', () => tl.reverse())
+        let tlFooterTwo = gsap.timeline({ paused: true })
+        tlFooterTwo.to(link, { color: '#b7b7b7', duration: 0.1 })
+        item.addEventListener('mouseenter', () => tlFooterTwo.play())
+        item.addEventListener('mouseleave', () => tlFooterTwo.reverse())
       })
+
+      // HOVER
+
+      let linksArrow = gsap.utils.toArray('[link-arrow]')
+      linksArrow.forEach((link) => {
+        let arrow = link.querySelector('.link-arrow')
+        let hover = gsap.timeline({ paused: true })
+        hover.to(arrow, {
+          yPercent: -25,
+          xPercent: 25,
+          scale: 1.2,
+          duration: 0.2,
+          ease: 'none',
+        })
+        link.addEventListener('mouseenter', () => hover.play())
+        link.addEventListener('mouseleave', () => hover.reverse())
+      })
+
+      let navLinks = gsap.utils.toArray('.nav-item')
+      if (data.next.namespace == 'agenda') {
+        navLinks.forEach((navLink) => {
+          let navText = navLink.querySelector('.nav-text')
+          let tl = gsap.timeline({
+            paused: true,
+            duration: 0.1,
+            ease: 'none',
+          })
+          tl.to(navText, {
+            color: '#141313',
+            duration: 0.1,
+            ease: 'none',
+          }).to(
+            navLink,
+            { borderColor: '#141313', duration: 0.1, ease: 'none' },
+            '<'
+          )
+          navLink.addEventListener('mouseenter', () => tl.play())
+          navLink.addEventListener('mouseleave', () => tl.reverse())
+        })
+      } else {
+        navLinks.forEach((navLink) => {
+          let navText = navLink.querySelector('.nav-text')
+          let tl = gsap.timeline({
+            paused: true,
+            duration: 0.1,
+            ease: 'none',
+          })
+          tl.to(navText, {
+            color: '#a80000',
+            duration: 0.1,
+            ease: 'none',
+          }).to(
+            navLink,
+            { borderColor: '#a80000', duration: 0.1, ease: 'none' },
+            '<'
+          )
+          navLink.addEventListener('mouseenter', () => tl.play())
+          navLink.addEventListener('mouseleave', () => tl.reverse())
+        })
+      }
+
+      if (data.next.namespace != 'home') {
+        let navColor = gsap.timeline({ paused: true })
+        navColor.to('.nav-bar-fixed', {
+          backgroundColor: '#141313',
+          duration: 0.3,
+          ease: 'none',
+        })
+        ScrollTrigger.create({
+          trigger: '.section-hero',
+          start: 'bottom 80px',
+          onEnter: () => {
+            navColor.play()
+          },
+          onLeaveBack: () => {
+            navColor.reverse()
+          },
+        })
+      }
+      if (data.next.namespace == 'programme') {
+        let datesLink = data.next.container.querySelector('.dates-link')
+        gsap.to(datesLink, {
+          rotate: 360,
+          transformOrigin: 'center',
+          duration: 9,
+          ease: 'none',
+          repeat: -1,
+        })
+        let buttonHover = gsap.timeline({ paused: true })
+        buttonHover.to('.dates-button', {
+          color: '#b7b7b7',
+          duration: 0.1,
+          ease: 'none',
+        })
+        datesLink.addEventListener('mouseenter', () => buttonHover.play())
+        datesLink.addEventListener('mouseleave', () => buttonHover.reverse())
+      }
     })
   }
   gsap.delayedCall(1, myAnimations)

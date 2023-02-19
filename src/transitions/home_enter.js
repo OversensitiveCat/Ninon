@@ -1,8 +1,10 @@
 import { gsap } from 'gsap'
 
 const homeEnter = () => {
-  gsap.set('.accueil > *', { autoAlpha: 1 })
-  const letters = gsap.utils.toArray('.accueil .cls-1, .accueil .cls-3')
+  gsap.set('.section-hero-home > *', { autoAlpha: 1 })
+  const letters = gsap.utils.toArray(
+    '.section-hero-home .cls-1, .section-hero-home .cls-3'
+  )
 
   let tl = gsap.timeline()
   tl.from(

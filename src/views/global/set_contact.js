@@ -20,8 +20,8 @@ const setContact = () => {
       duration: 0,
     })
     .to(
-      '.contact-card-container, .nav-bar-project',
-      { backgroundColor: '#141313', duration: 0.4 },
+      '.contact-card-container, .nav-bar-fixed',
+      { backgroundColor: '#141313', duration: 0.4, ease: 'none' },
       '<'
     )
     .from(
@@ -116,10 +116,10 @@ const setContact = () => {
       let contactButton = document.querySelector('.nav-item-contact')
       let closeButton = document.querySelector('.close-button')
       contactButton.addEventListener('click', () => {
-        tlContact.play()
+        tlContact.timeScale(1).play()
       })
       closeButton.addEventListener('click', () => {
-        tlContact.reverse()
+        tlContact.timeScale(1.8).reverse()
       })
       closeButton.addEventListener('mouseenter', () => {
         hoverButton.play()
@@ -147,6 +147,13 @@ const setContact = () => {
       closeButton.addEventListener('mouseleave', () => {
         hoverButton.reverse()
       })
+    })
+    const links = gsap.utils.toArray('.agent-container > .grey-link')
+    links.forEach((link) => {
+      let tl = gsap.timeline({ paused: true })
+      tl.to(link, { color: '#a80000', duration: 0.1, ease: 'none' })
+      link.addEventListener('mouseenter', () => tl.play())
+      link.addEventListener('mouseleave', () => tl.reverse())
     })
   }
   return gsap.delayedCall(1, set)
