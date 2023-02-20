@@ -112,7 +112,6 @@ const setContact = () => {
   function set() {
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
-      console.log('contact is set')
       let contactButton = document.querySelector('.nav-item-contact')
       let closeButton = document.querySelector('.close-button')
       contactButton.addEventListener('click', () => {
@@ -129,8 +128,6 @@ const setContact = () => {
       })
     })
     mm.add('(max-width: 991px)', () => {
-      console.log('contact mobile is set')
-
       let contactButtonMobile = document.querySelector(
         '.nav-item-contact-mobile'
       )

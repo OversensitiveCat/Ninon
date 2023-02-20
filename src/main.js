@@ -11,6 +11,7 @@ import otherEnter from './transitions/other_enter'
 import projectEnter from './transitions/project_enter'
 import quickTransition from './transitions/quick_enter'
 import agenda from './views/agenda'
+import galerie from './views/galerie'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
 import mobileHeight from './views/global/mobileHeight'
@@ -118,11 +119,13 @@ barba.init({
       enter() {
         enterTransition()
       },
-      afterEnter(data) {
-        otherEnter(data)
+      afterEnter() {
+        // otherEnter(data)
+        galerie()
       },
-      once(data) {
-        otherOnce(data)
+      once() {
+        // otherOnce(data)
+        galerie()
       },
     },
   ],

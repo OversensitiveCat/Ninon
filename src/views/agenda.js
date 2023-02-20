@@ -26,6 +26,24 @@ const agenda = () => {
       info.addEventListener('mouseleave', () => tl.reverse())
     })
 
+    //FIlTER DROPDOWN (-43deg)
+
+    const form = document.querySelector('.form-block')
+    const filterBox = document.querySelector('.filter-box')
+    gsap.set(form, { autoAlpha: 0 })
+    let dropForm = gsap.timeline({ paused: true })
+    dropForm
+      .to('.filter-arrow', { rotate: -43 })
+      .to(form, { autoAlpha: 1, height: 'auto' }, '<')
+    function drop() {
+      if (dropForm.progress() == 0) {
+        dropForm.play()
+      } else {
+        dropForm.reverse()
+      }
+    }
+    filterBox.addEventListener('click', () => drop())
+
     // FILTER
     let c = new Array()
     let e = new Array()
@@ -78,10 +96,27 @@ const agenda = () => {
     let residences = new Type(r)
     let all = [concerts, enregistrements, residences]
 
-    // Now we need to add the empty-state
+    // If we want to add an empty-state
     const emptyState = document.querySelector('.empty-state-agenda-manual')
     gsap.to(emptyState, { autoAlpha: 0 })
 
+    // If we want to add a reset button
+
+    // const reset = document.querySelector('.reset')
+    // reset.addEventListener('click', () => {
+    //   all.forEach((t) => {
+    //     t.active = false
+    //     t.visible = true
+    //     t.filter()
+    //   })
+    //   checkboxs.forEach((checkbox) => {
+    //     if (checkbox.classList.contains('w--redirected-checked') == true) {
+    //       checkbox.classList.remove('w--redirected-checked')
+    //     } else return
+    //   })
+    // })
+
+    // Checkboxs events
     let checkboxs = gsap.utils.toArray('.check-box')
     checkboxs.forEach((checkbox) => {
       checkbox.addEventListener('click', () => {
@@ -90,17 +125,14 @@ const agenda = () => {
             case 0:
               concerts.active = true
               all.forEach((t) => t.check())
-              console.log(all)
               break
             case 1:
               enregistrements.active = true
               all.forEach((t) => t.check())
-              console.log(all)
               break
             case 2:
               residences.active = true
               all.forEach((t) => t.check())
-              console.log(all)
           }
         }
         if (checkbox.classList.contains('w--redirected-checked') == true) {
@@ -108,32 +140,32 @@ const agenda = () => {
             case 0:
               concerts.active = false
               all.forEach((t) => t.check())
-              console.log(all)
               break
             case 1:
               enregistrements.active = false
               all.forEach((t) => t.check())
-              console.log(all)
               break
             case 2:
               residences.active = false
               all.forEach((t) => t.check())
-              console.log(all)
           }
         }
-      })
-    })
-    const reset = document.querySelector('.reset')
-    reset.addEventListener('click', () => {
-      all.forEach((t) => {
-        t.active = false
-        t.visible = true
-        t.filter()
-      })
-      checkboxs.forEach((checkbox) => {
-        if (checkbox.classList.contains('w--redirected-checked') == true) {
-          checkbox.classList.remove('w--redirected-checked')
-        } else return
+        if (
+          concerts.visible == false &&
+          residences.visible == false &&
+          enregistrements.visible == false
+        ) {
+          all.forEach((t) => {
+            t.active = false
+            t.visible = true
+            t.filter()
+          })
+          checkboxs.forEach((checkbox) => {
+            if (checkbox.classList.contains('w--redirected-checked') == false) {
+              checkbox.classList.remove('w--redirected-checked')
+            } else return
+          })
+        }
       })
     })
   }
