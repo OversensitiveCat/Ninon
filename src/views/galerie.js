@@ -16,12 +16,30 @@ const galerie = () => {
     let widthPercent = width + '%'
     let active = 1
 
+    let largBox = photo.offsetWidth
+    function boxSize() {
+      photosBox.forEach((box) => {
+        if (photosBox.indexOf(box) == active) {
+          gsap.set(box, { height: 'auto' })
+        } else {
+          gsap.set(box, { height: largBox })
+        }
+      })
+    }
     function ajustSize() {
+      gsap.set(container, { height: 'auto' })
       let height = container.offsetHeight
       gsap.set(container, { height: height })
-      console.log(height)
-      console.log(container.offsetHeight)
     }
+    boxSize()
+    gsap.delayedCall(0.6, ajustSize)
+
+    window.addEventListener('resize', () => {
+      largBox = photo.offsetWidth
+      boxSize()
+      ajustSize()
+    })
+
     function transform() {
       gsap.to('.photos-wrapper', {
         xPercent: percent,
@@ -32,7 +50,6 @@ const galerie = () => {
         width: widthPercent,
         duration: 0.6,
         ease: 'none',
-        onComplete: () => ajustSize(),
       })
       photosItem.forEach((item) => {
         if (photosItem.indexOf(item) == active) {
@@ -45,18 +62,11 @@ const galerie = () => {
         if (photosBox.indexOf(box) == active) {
           gsap.to(box, { height: 'auto', duration: 0.6 })
         } else {
-          gsap.to(box, { height: '18rem', duration: 0.6 })
+          gsap.to(box, { height: largBox, duration: 0.6 })
         }
       })
     }
     transform()
-
-    function size() {
-      let larg = photo.offsetWidth
-      gsap.set(photosBox, { height: larg })
-    }
-    size()
-    window.addEventListener('resize', () => size())
 
     function goLeft() {
       if (percent == 20) {

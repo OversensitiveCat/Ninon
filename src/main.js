@@ -23,6 +23,7 @@ barba.use(barbaPrefetch)
 
 barba.hooks.beforeEnter(() => {
   mobileHeight()
+  window.addEventListener('unload', () => window.scrollTo(0, 0))
 })
 
 barba.hooks.afterEnter((data) => {
