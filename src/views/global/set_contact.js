@@ -1,8 +1,5 @@
 import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import SplitType from 'split-type'
-
-gsap.registerPlugin(ScrollToPlugin)
 
 const setContact = () => {
   let letters = new SplitType('.contact-heading', {

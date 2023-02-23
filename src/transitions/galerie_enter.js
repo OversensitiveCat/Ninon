@@ -1,11 +1,76 @@
 import { gsap } from 'gsap'
 import { Observer } from 'gsap/Observer'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, Observer)
 
-const galerie = () => {
+const galerieEnter = () => {
   function galerieFunction() {
+    gsap.set('.nav-bar > *, max-width > *', { autoAlpha: 1 })
+    let letters = new SplitType('.heading1', {
+      types: 'chars',
+      tagName: 'span',
+    })
+    let lettersNav = new SplitType('.nav-heading', {
+      types: 'chars',
+      tagName: 'span',
+    })
+    let tl = gsap.timeline()
+    tl.from(
+      letters.chars,
+      {
+        autoAlpha: 0,
+        scale: 0.2,
+        yPercent: -20,
+        duration: 0.2,
+        stagger: { amount: 0.5 },
+      },
+      '+=0.8'
+    )
+      .from(
+        '.nav-item',
+        {
+          autoAlpha: 0,
+          yPercent: 100,
+          duration: 0.4,
+          stagger: { amount: 1 },
+        },
+        '-=0.2'
+      )
+      .from(
+        lettersNav.chars,
+        {
+          autoAlpha: 0,
+          scale: 0.2,
+          yPercent: -20,
+          duration: 0.2,
+          stagger: { amount: 0.5 },
+        },
+        '<'
+      )
+      .from(
+        '.photos-item',
+        { opacity: 0, yPercent: 20, stagger: 0.35 },
+        '-=0.8'
+      )
+      .from(
+        '.max-width > .loading-line-box',
+        { opacity: 0, yPercent: 60 },
+        '-=1'
+      )
+      .from('.link-out.global', { opacity: 0, yPercent: 20 }, '-=0.8')
+      .from(
+        '.nav-galerie',
+        {
+          opacity: 0,
+          rotate: 360,
+          yPercent: -60,
+          xPercent: -50,
+          duration: 0.7,
+        },
+        '<'
+      )
     const container = document.querySelector('.photos-container')
     const photo = document.querySelector('.photo')
     const arrows = gsap.utils.toArray('.arrow-galerie')
@@ -22,7 +87,7 @@ const galerie = () => {
         if (photosBox.indexOf(box) == active) {
           gsap.set(box, { height: 'auto' })
         } else {
-          gsap.set(box, { height: largBox })
+          gsap.set(box, { height: photo.offsetWidth })
         }
       })
     }
@@ -32,7 +97,7 @@ const galerie = () => {
       gsap.set(container, { height: height })
     }
     boxSize()
-    gsap.delayedCall(0.6, ajustSize)
+    ajustSize()
 
     window.addEventListener('resize', () => {
       largBox = photo.offsetWidth
@@ -46,7 +111,7 @@ const galerie = () => {
         duration: 0.6,
         ease: 'none',
       })
-      gsap.to('.loading-line', {
+      gsap.to('.loading-line-galerie', {
         width: widthPercent,
         duration: 0.6,
         ease: 'none',
@@ -101,7 +166,7 @@ const galerie = () => {
       }
     })
   }
-  gsap.delayedCall(1, galerieFunction)
+  gsap.delayedCall(0.2, galerieFunction)
 }
 
-export default galerie
+export default galerieEnter

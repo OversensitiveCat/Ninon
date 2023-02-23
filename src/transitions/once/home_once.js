@@ -1,19 +1,22 @@
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const homeOnce = () => {
-  gsap.set('.section-hero-home > *', { autoAlpha: 1 })
   const letters = gsap.utils.toArray(
     '.section-hero-home .cls-1, .section-hero-home .cls-3'
   )
-
   let tl = gsap.timeline()
-  tl.from(letters, {
-    autoAlpha: 0,
-    duration: 0.2,
-    stagger: { amount: 1.2 },
-    scale: 0.2,
-    yPercent: -20,
-  })
+  tl.to('.hide', { autoAlpha: 0, duration: 0.4 })
+    .from(letters, {
+      autoAlpha: 0,
+      duration: 0.2,
+      stagger: { amount: 1.2 },
+      scale: 0.2,
+      yPercent: -20,
+    })
     .from(
       '.image-accueil',
       { autoAlpha: 0, yPercent: 70, duration: 1.6, scale: 0.9 },

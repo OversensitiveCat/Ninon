@@ -1,9 +1,11 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
 
+import galerieEnter from './transitions/galerie_enter'
 import enterTransition from './transitions/global/basic_enter'
 import leaveTransition from './transitions/global/basic_leave'
 import homeEnter from './transitions/home_enter'
+import galerieOnce from './transitions/once/galerie_once'
 import homeOnce from './transitions/once/home_once'
 import otherOnce from './transitions/once/other_once'
 import projectOnce from './transitions/once/project_once'
@@ -11,10 +13,11 @@ import otherEnter from './transitions/other_enter'
 import projectEnter from './transitions/project_enter'
 import quickTransition from './transitions/quick_enter'
 import agenda from './views/agenda'
-import galerie from './views/galerie'
 import animations from './views/global/animations'
 import setLenis from './views/global/lenis'
 import mobileHeight from './views/global/mobileHeight'
+import nav from './views/global/nav'
+import navProjets from './views/global/nav_projets'
 import setContact from './views/global/set_contact'
 import setNavMob from './views/global/set_navMob'
 import home from './views/home'
@@ -27,7 +30,12 @@ barba.hooks.beforeEnter(() => {
 })
 
 barba.hooks.afterEnter((data) => {
-  animations(data), setLenis(), setNavMob(), setContact()
+  animations(data),
+    setLenis(),
+    setNavMob(),
+    setContact(),
+    navProjets(),
+    nav(data)
 })
 
 barba.init({
@@ -35,8 +43,14 @@ barba.init({
   views: [
     {
       namespace: 'home',
-      beforeEnter() {
+      afterEnter() {
         home()
+      },
+    },
+    {
+      namespace: 'agenda',
+      beforeEnter() {
+        agenda()
       },
     },
   ],
@@ -64,8 +78,8 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      enter() {
-        enterTransition()
+      enter(data) {
+        enterTransition(data)
       },
       afterEnter({ next }) {
         projectEnter(next.container)
@@ -81,16 +95,14 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      enter() {
-        enterTransition()
+      enter(data) {
+        enterTransition(data)
       },
       afterEnter(data) {
         otherEnter(data)
-        agenda()
       },
       once(data) {
         otherOnce(data)
-        agenda()
       },
     },
     {
@@ -100,8 +112,8 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      enter() {
-        enterTransition()
+      enter(data) {
+        enterTransition(data)
       },
       afterEnter(data) {
         otherEnter(data)
@@ -117,16 +129,14 @@ barba.init({
         const done = this.async()
         leaveTransition(done)
       },
-      enter() {
-        enterTransition()
+      enter(data) {
+        enterTransition(data)
       },
       afterEnter() {
-        // otherEnter(data)
-        galerie()
+        galerieEnter()
       },
       once() {
-        // otherOnce(data)
-        galerie()
+        galerieOnce()
       },
     },
   ],

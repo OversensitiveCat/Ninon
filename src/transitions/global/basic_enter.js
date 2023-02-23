@@ -1,6 +1,6 @@
 import { gsap } from 'gsap'
 
-const enterTransition = () => {
+const enterTransition = (data) => {
   const shape0 =
     'M469.539032,263.986786q -234.7695 0 -469.539 0L0,263.557617c66.11113,0.429169,351.088104,0.429169,469.539032,0.208344V263.986786z'
   const shape3 =
@@ -25,6 +25,10 @@ const enterTransition = () => {
       duration: 0,
     })
     .to('.path-container', { zIndex: -5 })
+
+  if (data.next.namespace == 'galerie') {
+    gsap.set('.nav-bar > *, max-width > *', { autoAlpha: 0 })
+  }
 }
 
 export default enterTransition

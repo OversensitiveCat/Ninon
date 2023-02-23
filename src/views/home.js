@@ -9,6 +9,11 @@ gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
 
 const home = () => {
   function homeFunction() {
+    let videos = gsap.utils.toArray('video')
+    videos.forEach((video) => {
+      video.muted = true
+      video.play()
+    })
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
       // ECLATER

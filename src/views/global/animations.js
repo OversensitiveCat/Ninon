@@ -71,7 +71,6 @@ const animations = (data) => {
         types: 'words',
         tagName: 'span',
       })
-      // const words = gsap.utils.toArray('.word')
       words.words.forEach((word) => {
         let tl = gsap.timeline({ paused: true })
         tl.from(word, {
@@ -190,84 +189,8 @@ const animations = (data) => {
         item.addEventListener('mouseleave', () => tlFooterTwo.reverse())
       })
 
-      // HOVER
+      // DATES BUTTOn
 
-      let linksArrow = gsap.utils.toArray('[link-arrow]')
-      linksArrow.forEach((link) => {
-        let arrow = link.querySelector('.link-arrow')
-        let hover = gsap.timeline({ paused: true })
-        hover.to(arrow, {
-          yPercent: -25,
-          xPercent: 25,
-          scale: 1.2,
-          duration: 0.2,
-          ease: 'none',
-        })
-        link.addEventListener('mouseenter', () => hover.play())
-        link.addEventListener('mouseleave', () => hover.reverse())
-      })
-
-      let navLinks = gsap.utils.toArray('.nav-item')
-      if (data.next.namespace == 'agenda') {
-        navLinks.forEach((navLink) => {
-          let navText = navLink.querySelector('.nav-text')
-          let tl = gsap.timeline({
-            paused: true,
-            duration: 0.1,
-            ease: 'none',
-          })
-          tl.to(navText, {
-            color: '#141313',
-            duration: 0.1,
-            ease: 'none',
-          }).to(
-            navLink,
-            { borderColor: '#141313', duration: 0.1, ease: 'none' },
-            '<'
-          )
-          navLink.addEventListener('mouseenter', () => tl.play())
-          navLink.addEventListener('mouseleave', () => tl.reverse())
-        })
-      } else {
-        navLinks.forEach((navLink) => {
-          let navText = navLink.querySelector('.nav-text')
-          let tl = gsap.timeline({
-            paused: true,
-            duration: 0.1,
-            ease: 'none',
-          })
-          tl.to(navText, {
-            color: '#a80000',
-            duration: 0.1,
-            ease: 'none',
-          }).to(
-            navLink,
-            { borderColor: '#a80000', duration: 0.1, ease: 'none' },
-            '<'
-          )
-          navLink.addEventListener('mouseenter', () => tl.play())
-          navLink.addEventListener('mouseleave', () => tl.reverse())
-        })
-      }
-
-      if (data.next.namespace != 'home') {
-        let navColor = gsap.timeline({ paused: true })
-        navColor.to('.nav-bar-fixed', {
-          backgroundColor: '#141313',
-          duration: 0.3,
-          ease: 'none',
-        })
-        ScrollTrigger.create({
-          trigger: '.section-hero',
-          start: 'bottom 80px',
-          onEnter: () => {
-            navColor.play()
-          },
-          onLeaveBack: () => {
-            navColor.reverse()
-          },
-        })
-      }
       if (data.next.namespace == 'programme') {
         let datesLink = data.next.container.querySelector('.dates-link')
         gsap.to(datesLink, {
@@ -286,6 +209,23 @@ const animations = (data) => {
         datesLink.addEventListener('mouseenter', () => buttonHover.play())
         datesLink.addEventListener('mouseleave', () => buttonHover.reverse())
       }
+
+      // HOVER
+
+      let linksArrow = gsap.utils.toArray('[link-arrow]')
+      linksArrow.forEach((link) => {
+        let arrow = link.querySelector('.link-arrow')
+        let hover = gsap.timeline({ paused: true })
+        hover.to(arrow, {
+          yPercent: -25,
+          xPercent: 25,
+          scale: 1.2,
+          duration: 0.2,
+          ease: 'none',
+        })
+        link.addEventListener('mouseenter', () => hover.play())
+        link.addEventListener('mouseleave', () => hover.reverse())
+      })
     })
   }
   gsap.delayedCall(1, myAnimations)
