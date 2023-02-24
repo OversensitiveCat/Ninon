@@ -117,16 +117,18 @@ const setContact = (data) => {
   })
 
   let hero = true
-  ScrollTrigger.create({
-    trigger: '.section-hero',
-    start: 'bottom top',
-    onEnter: () => {
-      hero = false
-    },
-    onLeaveBack: () => {
-      hero = true
-    },
-  })
+  if (data.next.namespace == 'home') {
+    ScrollTrigger.create({
+      trigger: '.section-hero',
+      start: 'bottom top',
+      onEnter: () => {
+        hero = false
+      },
+      onLeaveBack: () => {
+        hero = true
+      },
+    })
+  }
 
   function set() {
     const itemsFooter = gsap.utils.toArray('.nav-item-footer')
@@ -168,8 +170,10 @@ const setContact = (data) => {
         itemsFooter[5],
         document.querySelector('.nav-item-contact-mobile'),
       ]
-      buttons.addEventListener('click', () => {
-        tlContact.play()
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tlContact.play()
+        })
       })
     })
 

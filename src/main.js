@@ -24,8 +24,8 @@ import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.beforeEnter(() => {
-  mobileHeight()
+barba.hooks.beforeEnter((data) => {
+  mobileHeight(data)
   window.addEventListener('unload', () => window.scrollTo(0, 0))
 })
 

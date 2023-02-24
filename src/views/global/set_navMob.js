@@ -1,6 +1,8 @@
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
+import lenis from './lenis'
+
 gsap.registerPlugin(ScrollToPlugin)
 
 const setNavMob = () => {
@@ -33,14 +35,21 @@ const setNavMob = () => {
     let mm = gsap.matchMedia()
     mm.add('(max-width: 991px)', () => {
       let hamburger = document.querySelector('.hamburger')
-      console.log('nav mobile is set')
+      const navItems = gsap.utils.toArray('.nav-item-mobile')
       hamburger.addEventListener('click', () => {
         if (tlNav.progress() == 0) {
           tlNav.play()
-          document.querySelector('.body').style.overflowY = 'hidden'
+          lenis.stop()
         } else if (tlNav.progress() == 1) {
           tlNav.reverse()
-          document.querySelector('.body').style.overflowY = 'scroll'
+          lenis.start()
+        }
+      })
+      navItems.forEach((item) => {
+        if (navItems.indexOf(item) != 5) {
+          item.addEventListener('click', () =>
+            gsap.delayedCall(1.5, () => lenis.start())
+          )
         }
       })
     })

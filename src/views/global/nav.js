@@ -15,16 +15,18 @@ const nav = (data) => {
         closeButton = document.querySelector('.close-button')
 
       let hero = true
-      ScrollTrigger.create({
-        trigger: '.section-hero',
-        start: 'bottom 80px',
-        onEnter: () => {
-          hero = false
-        },
-        onLeaveBack: () => {
-          hero = true
-        },
-      })
+      if (data.next.namespace != 'galerie') {
+        ScrollTrigger.create({
+          trigger: '.section-hero',
+          start: 'bottom 80px',
+          onEnter: () => {
+            hero = false
+          },
+          onLeaveBack: () => {
+            hero = true
+          },
+        })
+      }
       // Nav items
       if (data.next.namespace == 'agenda') {
         links.forEach((link) => {
