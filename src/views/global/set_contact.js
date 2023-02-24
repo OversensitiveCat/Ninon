@@ -1,7 +1,13 @@
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
 
-const setContact = () => {
+import lenis from './lenis'
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+
+const setContact = (data) => {
   let letters = new SplitType('.contact-heading', {
     types: 'chars',
     tagName: 'span',
@@ -12,12 +18,16 @@ const setContact = () => {
   })
   let tlContact = gsap.timeline({ paused: true })
   tlContact
-    .to('.section-contact', {
-      zIndex: 6,
-      duration: 0,
-    })
     .to(
-      '.contact-card-container, .nav-bar-fixed',
+      '.section-contact',
+      {
+        zIndex: 6,
+        duration: 0,
+      },
+      '<'
+    )
+    .to(
+      '.contact-card-container, .nav-bar-fixed, .nav-projets',
       { backgroundColor: '#141313', duration: 0.4, ease: 'none' },
       '<'
     )
@@ -106,16 +116,45 @@ const setContact = () => {
     scale: 1.1,
   })
 
+  let hero = true
+  ScrollTrigger.create({
+    trigger: '.section-hero',
+    start: 'bottom top',
+    onEnter: () => {
+      hero = false
+    },
+    onLeaveBack: () => {
+      hero = true
+    },
+  })
+
   function set() {
+    const itemsFooter = gsap.utils.toArray('.nav-item-footer')
+    let closeButton = document.querySelector('.close-button')
+
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
-      let contactButton = document.querySelector('.nav-item-contact')
-      let closeButton = document.querySelector('.close-button')
-      contactButton.addEventListener('click', () => {
-        tlContact.timeScale(1).play()
-      })
-      closeButton.addEventListener('click', () => {
-        tlContact.timeScale(1.8).reverse()
+      let buttons = [
+        itemsFooter[5],
+        document.querySelector('.nav-item-contact'),
+      ]
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          if (data.next.namespace == 'home' && hero == true) {
+            gsap.to(window, {
+              scrollTo: '.section-about',
+              duration: 1.2,
+              ease: 'sine.inOut',
+            })
+            gsap.delayedCall(1.3, () => {
+              lenis.stop()
+              tlContact.timeScale(1).play()
+            })
+          } else {
+            lenis.stop()
+            tlContact.timeScale(1).play()
+          }
+        })
       })
       closeButton.addEventListener('mouseenter', () => {
         hoverButton.play()
@@ -125,23 +164,20 @@ const setContact = () => {
       })
     })
     mm.add('(max-width: 991px)', () => {
-      let contactButtonMobile = document.querySelector(
-        '.nav-item-contact-mobile'
-      )
-      let closeButton = document.querySelector('.close-button')
-      contactButtonMobile.addEventListener('click', () => {
+      let buttons = [
+        itemsFooter[5],
+        document.querySelector('.nav-item-contact-mobile'),
+      ]
+      buttons.addEventListener('click', () => {
         tlContact.play()
       })
-      closeButton.addEventListener('click', () => {
-        tlContact.reverse()
-      })
-      closeButton.addEventListener('mouseenter', () => {
-        hoverButton.play()
-      })
-      closeButton.addEventListener('mouseleave', () => {
-        hoverButton.reverse()
-      })
     })
+
+    closeButton.addEventListener('click', () => {
+      lenis.start()
+      tlContact.timeScale(1.8).reverse()
+    })
+
     const links = gsap.utils.toArray('.agent-container > .grey-link')
     links.forEach((link) => {
       let tl = gsap.timeline({ paused: true })

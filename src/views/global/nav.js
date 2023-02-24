@@ -10,8 +10,21 @@ const nav = (data) => {
       const links = gsap.utils.toArray('.nav-item'),
         white = '#f7f4f4',
         red = '#a80000',
-        black = '#141313'
+        black = '#141313',
+        contact = document.querySelector('.nav-item-contact'),
+        closeButton = document.querySelector('.close-button')
 
+      let hero = true
+      ScrollTrigger.create({
+        trigger: '.section-hero',
+        start: 'bottom 80px',
+        onEnter: () => {
+          hero = false
+        },
+        onLeaveBack: () => {
+          hero = true
+        },
+      })
       // Nav items
       if (data.next.namespace == 'agenda') {
         links.forEach((link) => {
@@ -61,6 +74,22 @@ const nav = (data) => {
               link.addEventListener('mouseenter', blackPlay)
               link.addEventListener('mouseleave', blackReverse)
             },
+          })
+          contact.addEventListener('click', () => {
+            if (hero == true) {
+              link.removeEventListener('mouseenter', blackPlay)
+              link.removeEventListener('mouseleave', blackReverse)
+              link.addEventListener('mouseenter', whitePlay)
+              link.addEventListener('mouseleave', whiteReverse)
+            }
+          })
+          closeButton.addEventListener('click', () => {
+            if (hero == true) {
+              link.removeEventListener('mouseenter', whitePlay)
+              link.removeEventListener('mouseleave', whiteReverse)
+              link.addEventListener('mouseenter', blackPlay)
+              link.addEventListener('mouseleave', blackReverse)
+            }
           })
         })
         // Nav items projects
@@ -123,6 +152,24 @@ const nav = (data) => {
               link.addEventListener('mouseenter', redPlayOne)
               link.addEventListener('mouseleave', redReverseOne)
             },
+          })
+          contact.addEventListener('click', () => {
+            if (hero == true) {
+              gsap.set(link, { color: white })
+              link.removeEventListener('mouseenter', redPlayOne)
+              link.removeEventListener('mouseleave', redReverseOne)
+              link.addEventListener('mouseenter', redPlayTwo)
+              link.addEventListener('mouseleave', redReverseTwo)
+            }
+          })
+          closeButton.addEventListener('click', () => {
+            if (hero == true) {
+              gsap.set(link, { color: black })
+              link.removeEventListener('mouseenter', redPlayTwo)
+              link.removeEventListener('mouseleave', redReverseTwo)
+              link.addEventListener('mouseenter', redPlayOne)
+              link.addEventListener('mouseleave', redReverseOne)
+            }
           })
         })
       } else {

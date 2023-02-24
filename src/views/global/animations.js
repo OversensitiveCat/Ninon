@@ -8,10 +8,13 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 const animations = (data) => {
   function myAnimations() {
     // SPLIT HEADINGS
-    let titles = new SplitType('.content-wrapper [split-letters]', {
-      types: 'chars',
-      tagName: 'span',
-    })
+    let titles = new SplitType(
+      '.content-wrapper [split-letters], .nav-bar [split-letters]',
+      {
+        types: 'chars',
+        tagName: 'span',
+      }
+    )
     titles.elements.forEach((title) => {
       title.style.whiteSpace = 'nowrap'
       if (title.dataset.anim == 'rotated-title') {

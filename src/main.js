@@ -14,11 +14,11 @@ import projectEnter from './transitions/project_enter'
 import quickTransition from './transitions/quick_enter'
 import agenda from './views/agenda'
 import animations from './views/global/animations'
-import setLenis from './views/global/lenis'
 import mobileHeight from './views/global/mobileHeight'
 import nav from './views/global/nav'
 import navProjets from './views/global/nav_projets'
 import setContact from './views/global/set_contact'
+import setLenis from './views/global/set_lenis'
 import setNavMob from './views/global/set_navMob'
 import home from './views/home'
 
@@ -33,7 +33,7 @@ barba.hooks.afterEnter((data) => {
   animations(data),
     setLenis(),
     setNavMob(),
-    setContact(),
+    setContact(data),
     navProjets(),
     nav(data)
 })

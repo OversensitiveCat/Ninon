@@ -1,22 +1,22 @@
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const homeEnter = () => {
   const letters = gsap.utils.toArray(
     '.section-hero-home .cls-1, .section-hero-home .cls-3'
   )
-  let tl = gsap.timeline()
-  tl.to('.hide', { autoAlpha: 0, duration: 0.4 })
-    .from(
-      letters,
-      {
-        autoAlpha: 0,
-        duration: 0.2,
-        stagger: { amount: 1.2 },
-        scale: 0.2,
-        yPercent: -20,
-      },
-      '+= 1.2'
-    )
+  let tlHero = gsap.timeline()
+  tlHero
+    .to('.hide', { autoAlpha: 0, duration: 0.4 }, '+=1.4')
+    .from(letters, {
+      autoAlpha: 0,
+      duration: 0.2,
+      stagger: { amount: 1.2 },
+      scale: 0.2,
+      yPercent: -20,
+    })
     .from(
       '.image-accueil',
       { autoAlpha: 0, yPercent: 70, duration: 1.6, scale: 0.9 },

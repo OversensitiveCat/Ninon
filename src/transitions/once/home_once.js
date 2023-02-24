@@ -1,15 +1,15 @@
 import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+gsap.registerPlugin(ScrollTrigger)
 
 const homeOnce = () => {
   const letters = gsap.utils.toArray(
     '.section-hero-home .cls-1, .section-hero-home .cls-3'
   )
-  let tl = gsap.timeline()
-  tl.to('.hide', { autoAlpha: 0, duration: 0.4 })
+  let tlHero = gsap.timeline()
+  tlHero
+    .to('.hide', { autoAlpha: 0, duration: 0.4 })
     .from(letters, {
       autoAlpha: 0,
       duration: 0.2,
