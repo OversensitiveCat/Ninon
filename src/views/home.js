@@ -196,20 +196,20 @@ const home = () => {
       const transform = () => {
         videoItems.forEach((vid) => {
           if (videoItems.indexOf(vid) === current) {
-            gsap.to(vid, { yPercent: 0 })
+            gsap.to(vid, { yPercent: 0, duration: 0.8 })
           } else {
-            gsap.to(vid, { yPercent: -10 })
+            gsap.to(vid, { yPercent: -10, duration: 0.8 })
           }
         })
         videoImg.forEach((img) => {
           if (videoImg.indexOf(img) === current) {
-            gsap.to(img, { filter: 'none' })
+            gsap.to(img, { filter: 'none', duration: 0.8 })
           } else {
-            gsap.to(img, { filter: 'grayscale(100%)' })
+            gsap.to(img, { filter: 'grayscale(100%)', duration: 0.8 })
           }
         })
-        gsap.to('.videos-wrapper', { xPercent: percent })
-        gsap.to('.loading-line', { width: widthPercent })
+        gsap.to('.videos-wrapper', { xPercent: percent, duration: 0.8 })
+        gsap.to('.loading-line', { width: widthPercent, duration: 0.8 })
       }
 
       transform()
