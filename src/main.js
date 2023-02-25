@@ -30,7 +30,7 @@ barba.hooks.beforeEnter((data) => {
 })
 
 barba.hooks.afterEnter((data) => {
-  animations(data),
+  animations(),
     setLenis(),
     setNavMob(),
     setContact(data),

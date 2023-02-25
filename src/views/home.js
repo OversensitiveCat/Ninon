@@ -190,7 +190,7 @@ const home = () => {
 
       let current = 1
       let percent = 0
-      let width = 50
+      let width = 33
       let widthPercent = width + '%'
 
       const transform = () => {
@@ -214,50 +214,48 @@ const home = () => {
 
       transform()
 
-      window.addEventListener('keydown', (e) => {
-        if (e.key == 'ArrowLeft') {
-          if (percent == 33) {
-            return
-          } else {
-            percent += 33
-            current -= 1
-            width -= 25
-            widthPercent = width + '%'
-            transform()
-          }
-        } else if (e.key == 'ArrowRight') {
-          if (percent == -66) {
-            return
-          } else {
-            percent -= 33
-            current += 1
-            width += 25
-            widthPercent = width + '%'
-            transform()
-          }
+      function goLeft() {
+        if (percent == 0) {
+          gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
         }
-      })
-
-      arrows[0].addEventListener('click', () => {
+        if (percent == -66) {
+          gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
+        }
         if (percent == 33) {
           return
         } else {
           percent += 33
           current -= 1
-          width -= 25
+          width -= 33
           widthPercent = width + '%'
           transform()
         }
-      })
-      arrows[1].addEventListener('click', () => {
+      }
+
+      function goRight() {
+        if (percent == -33) {
+          gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
+        }
+        if (percent == 33) {
+          gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
+        }
         if (percent == -66) {
           return
         } else {
           percent -= 33
           current += 1
-          width += 25
+          width += 33
           widthPercent = width + '%'
           transform()
+        }
+      }
+      arrows[0].addEventListener('click', () => goLeft())
+      arrows[1].addEventListener('click', () => goRight())
+      window.addEventListener('keydown', (e) => {
+        if (e.key == 'ArrowLeft') {
+          goLeft()
+        } else if (e.key == 'ArrowRight') {
+          goRight()
         }
       })
     })
@@ -344,45 +342,45 @@ const home = () => {
       const translate = () => {
         gsap.to(wrapper, { xPercent: percent })
       }
-
-      Observer.create({
-        target: '.videos-container',
-        type: 'touch',
-        tolerance: 60,
-        onRight: () => {
-          if (percent == 0) {
-            return
-          } else {
-            percent += 100
-            translate()
-          }
-        },
-        onLeft: () => {
-          if (percent == -300) {
-            return
-          } else {
-            percent -= 100
-            translate()
-          }
-        },
-      })
-
-      arrows[0].addEventListener('click', () => {
+      gsap.set('#arrow-video-left', { attr: { stroke: '#201f1f' } })
+      function goLeft() {
+        if (percent == -100) {
+          gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
+        }
+        if (percent == -300) {
+          gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
+        }
         if (percent == 0) {
           return
         } else {
           percent += 100
           translate()
         }
-      })
-      arrows[1].addEventListener('click', () => {
+      }
+      function goRight() {
+        if (percent == -200) {
+          gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
+        }
+        if (percent == 0) {
+          gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
+        }
         if (percent == -300) {
           return
         } else {
           percent -= 100
           translate()
         }
+      }
+
+      Observer.create({
+        target: '.videos-container',
+        type: 'touch',
+        tolerance: 60,
+        onRight: () => goLeft(),
+        onLeft: () => goRight(),
       })
+      arrows[0].addEventListener('click', () => goLeft())
+      arrows[1].addEventListener('click', () => goRight())
     })
   }
   gsap.delayedCall(1, homeFunction)

@@ -5,7 +5,7 @@ import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
-const animations = (data) => {
+const animations = () => {
   function myAnimations() {
     // SPLIT HEADINGS
     let titles = new SplitType(
@@ -191,27 +191,6 @@ const animations = (data) => {
         item.addEventListener('mouseenter', () => tlFooterTwo.play())
         item.addEventListener('mouseleave', () => tlFooterTwo.reverse())
       })
-
-      // DATES BUTTOn
-
-      if (data.next.namespace == 'programme') {
-        let datesLink = data.next.container.querySelector('.dates-link')
-        gsap.to(datesLink, {
-          rotate: 360,
-          transformOrigin: 'center',
-          duration: 9,
-          ease: 'none',
-          repeat: -1,
-        })
-        let buttonHover = gsap.timeline({ paused: true })
-        buttonHover.to('.dates-button', {
-          color: '#b7b7b7',
-          duration: 0.1,
-          ease: 'none',
-        })
-        datesLink.addEventListener('mouseenter', () => buttonHover.play())
-        datesLink.addEventListener('mouseleave', () => buttonHover.reverse())
-      }
 
       // HOVER
 

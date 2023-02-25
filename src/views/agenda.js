@@ -67,6 +67,8 @@ const agenda = () => {
         this.items = items
         this.visible = true
         this.active = false
+        this.number = this.items.length
+        this.empty = false
       }
       filter() {
         if (this.visible == true) {
@@ -89,6 +91,13 @@ const agenda = () => {
           this.filter()
         }
       }
+      checkEmptiness() {
+        if (this.number === 0) {
+          this.empty = true
+        } else {
+          this.empty = false
+        }
+      }
     }
 
     let concerts = new Type(c)
@@ -96,9 +105,37 @@ const agenda = () => {
     let residences = new Type(r)
     let all = [concerts, enregistrements, residences]
 
-    // If we want to add an empty-state
+    // Empty-state
     const emptyState = document.querySelector('.empty-state-agenda-manual')
-    gsap.to(emptyState, { autoAlpha: 0 })
+    gsap.set(emptyState, { autoAlpha: 0 })
+    all.forEach((type) => {
+      type.checkEmptiness()
+    })
+
+    let activesType = new Array()
+    let emptiness = false
+
+    function addEmptyState() {
+      activesType.length = 0
+      all.forEach((type) => {
+        if (type.active === true) {
+          activesType.push(type)
+        }
+      })
+      function getEmptiness(type) {
+        return type.empty === true
+      }
+      emptiness = activesType.every(getEmptiness)
+      if (emptiness === true) {
+        gsap.to(emptyState, { autoAlpha: 1 })
+      } else {
+        gsap.to(emptyState, { autoAlpha: 0 })
+      }
+    }
+
+    function removeEmptyState() {
+      gsap.to(emptyState, { autoAlpha: 0 })
+    }
 
     // If we want to add a reset button
 
@@ -134,6 +171,7 @@ const agenda = () => {
               residences.active = true
               all.forEach((t) => t.check())
           }
+          addEmptyState()
         }
         if (checkbox.classList.contains('w--redirected-checked') == true) {
           switch (checkboxs.indexOf(checkbox)) {
@@ -149,6 +187,7 @@ const agenda = () => {
               residences.active = false
               all.forEach((t) => t.check())
           }
+          addEmptyState()
         }
         if (
           concerts.visible == false &&
@@ -165,6 +204,7 @@ const agenda = () => {
               checkbox.classList.remove('w--redirected-checked')
             } else return
           })
+          removeEmptyState()
         }
       })
     })
