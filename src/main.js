@@ -26,6 +26,7 @@ barba.use(barbaPrefetch)
 
 barba.hooks.beforeEnter((data) => {
   mobileHeight(data)
+  console.log('mobile height is fix')
   window.addEventListener('unload', () => window.scrollTo(0, 0))
 })
 
