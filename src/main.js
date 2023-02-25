@@ -24,16 +24,16 @@ import home from './views/home'
 
 barba.use(barbaPrefetch)
 
-barba.hooks.beforeEnter((data) => {
+barba.hooks.enter((data) => {
   mobileHeight(data)
-  console.log('mobile height is fix')
+  console.log('mobile height should be fix')
   window.addEventListener('unload', () => window.scrollTo(0, 0))
 })
 
 barba.hooks.afterEnter((data) => {
   animations(),
     setLenis(),
-    setNavMob(),
+    setNavMob(data),
     setContact(data),
     navProjets(),
     nav(data)

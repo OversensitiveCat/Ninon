@@ -1,11 +1,55 @@
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import lenis from './lenis'
 
-gsap.registerPlugin(ScrollToPlugin)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
-const setNavMob = () => {
+const setNavMob = (data) => {
+  let black = false
+  const goBlack = () => {
+    gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#141313' })
+  }
+  const goWhite = () => {
+    gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#f7f4f4' })
+  }
+  if (data.next.namespace == 'home') {
+    ScrollTrigger.create({
+      trigger: '.card-agenda',
+      start: 'top top',
+      end: 'bottom 40',
+      onEnter: () => {
+        goBlack()
+        black = true
+      },
+      onEnterBack: () => {
+        goBlack()
+        black = true
+      },
+      onLeave: () => {
+        goWhite()
+        black = false
+      },
+      onLeaveBack: () => {
+        goWhite()
+        black = false
+      },
+    })
+  }
+  ScrollTrigger.create({
+    trigger: '.content-wrapper',
+    start: 'bottom 40',
+    onEnter: () => {
+      goBlack()
+      black = true
+    },
+    onLeaveBack: () => {
+      goWhite()
+      black = false
+    },
+  })
+
   let tlNav = gsap.timeline({ paused: true })
   tlNav
     .to('.nav-mobile-container', {
@@ -40,9 +84,15 @@ const setNavMob = () => {
         if (tlNav.progress() == 0) {
           tlNav.play()
           lenis.stop()
+          if (black === true) {
+            goWhite()
+          }
         } else if (tlNav.progress() == 1) {
           tlNav.reverse()
           lenis.start()
+          if (black === true) {
+            gsap.delayedCall(1, () => goBlack())
+          }
         }
       })
       navItems.forEach((item) => {

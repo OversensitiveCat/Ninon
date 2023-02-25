@@ -173,6 +173,7 @@ const setContact = (data) => {
       let colorNav = gsap.timeline({ paused: true })
       colorNav.to('.nav-mobile-container', {
         backgroundColor: '#141313',
+        width: '100%',
         duration: 0.4,
         ease: 'none',
       })

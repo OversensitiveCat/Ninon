@@ -260,23 +260,6 @@ const home = () => {
       })
     })
     mm.add('(max-width: 991px)', () => {
-      // HAMBURGER COLOR
-      const goBlack = () => {
-        gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#141313' })
-      }
-      const goWhite = () => {
-        gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#f7f4f4' })
-      }
-
-      ScrollTrigger.create({
-        trigger: '.card-agenda',
-        start: 'top top',
-        end: 'bottom 40',
-        onEnter: () => goBlack(),
-        onEnterBack: () => goBlack(),
-        onLeave: () => goWhite(),
-        onLeaveBack: () => goWhite(),
-      })
       // PROJECT SNAP
       const circles = gsap.utils.toArray('.circles-container-mob .circle')
       let per = 0,
