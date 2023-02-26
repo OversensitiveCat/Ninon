@@ -79,7 +79,7 @@ const setNavMob = (data) => {
         stagger: 0.2,
         yPercent: 60,
       },
-      '<'
+      '-=0.4'
     )
 
   function set() {
