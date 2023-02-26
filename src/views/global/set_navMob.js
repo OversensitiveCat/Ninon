@@ -7,12 +7,19 @@ import lenis from './lenis'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const setNavMob = (data) => {
+  let red = false
   let black = false
   const goBlack = () => {
     gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#141313' })
   }
   const goWhite = () => {
     gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#f7f4f4' })
+  }
+  const goRed = () => {
+    gsap.to('.ham-line1, .ham-line2', { backgroundColor: '#a80000' })
+  }
+  if (data.next.namespace == 'agenda') {
+    red = true
   }
   if (data.next.namespace == 'home') {
     ScrollTrigger.create({
@@ -87,11 +94,17 @@ const setNavMob = (data) => {
           if (black === true) {
             goWhite()
           }
+          if (red === true) {
+            goRed()
+          }
         } else if (tlNav.progress() == 1) {
           tlNav.reverse()
           lenis.start()
           if (black === true) {
             gsap.delayedCall(1, () => goBlack())
+          }
+          if (red === true) {
+            gsap.delayedCall(1, () => goWhite())
           }
         }
       })

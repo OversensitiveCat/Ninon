@@ -40,7 +40,7 @@ barba.hooks.afterEnter((data) => {
 })
 
 barba.init({
-  debug: true,
+  timeout: 4000,
   views: [
     {
       namespace: 'home',
