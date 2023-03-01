@@ -16,8 +16,8 @@ const animations = () => {
       }
     )
     titles.elements.forEach((title) => {
-      // title.style.whiteSpace = 'nowrap'
       if (title.dataset.anim == 'rotated-title') {
+        title.style.whiteSpace = 'nowrap'
         let letters = title.querySelectorAll('.char')
         let tl = gsap.timeline({ paused: true })
         tl.from(letters, {

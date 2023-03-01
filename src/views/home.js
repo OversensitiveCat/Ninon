@@ -3,7 +3,6 @@ import { gsap } from 'gsap'
 import { Observer } from 'gsap/Observer'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin)
 
@@ -16,38 +15,38 @@ const home = () => {
     })
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
-      // ECLATER
-      let letters = new SplitType('.eclater', {
-        types: 'chars',
-        tagName: 'span',
-      })
-      // const letters = gsap.utils.toArray('.eclater .char')
-      letters.chars.forEach((letter) => {
-        let index = letters.chars.indexOf(letter)
-        if (index % 2 == 0) {
-          gsap.to(letter, {
-            scrollTrigger: {
-              trigger: '.eclater',
-              scrub: true,
-              start: 'top 70%',
-              end: 'top 20%',
-            },
-            yPercent: -8,
-            rotate: -5,
-          })
-        } else {
-          gsap.to(letter, {
-            scrollTrigger: {
-              trigger: '.eclater',
-              scrub: true,
-              start: 'top 70%',
-              end: 'top 20%',
-            },
-            yPercent: 8,
-            rotate: 5,
-          })
-        }
-      })
+      // // ECLATER
+      // let letters = new SplitType('.eclater', {
+      //   types: 'chars',
+      //   tagName: 'span',
+      // })
+      // // const letters = gsap.utils.toArray('.eclater .char')
+      // letters.chars.forEach((letter) => {
+      //   let index = letters.chars.indexOf(letter)
+      //   if (index % 2 == 0) {
+      //     gsap.to(letter, {
+      //       scrollTrigger: {
+      //         trigger: '.eclater',
+      //         scrub: true,
+      //         start: 'top 70%',
+      //         end: 'top 20%',
+      //       },
+      //       yPercent: -8,
+      //       rotate: -5,
+      //     })
+      //   } else {
+      //     gsap.to(letter, {
+      //       scrollTrigger: {
+      //         trigger: '.eclater',
+      //         scrub: true,
+      //         start: 'top 70%',
+      //         end: 'top 20%',
+      //       },
+      //       yPercent: 8,
+      //       rotate: 5,
+      //     })
+      //   }
+      // })
       // SLIDE PROJETS
       gsap.to('.project-one', {
         scrollTrigger: {

@@ -1,8 +1,10 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-const otherEnter = (data) => {
-  gsap.set('#hero-section > *', { autoAlpha: 1 })
+import lenis from '../views/global/lenis'
+
+const projectOnce = () => {
+  lenis.stop()
   let letters = new SplitType('.heading1', {
     types: 'chars',
     tagName: 'span',
@@ -11,18 +13,23 @@ const otherEnter = (data) => {
     types: 'chars',
     tagName: 'span',
   })
-  let tl = gsap.timeline()
-  tl.from(
-    letters.chars,
-    {
-      autoAlpha: 0,
-      scale: 0.2,
-      yPercent: -20,
-      duration: 0.2,
-      stagger: { amount: 0.8 },
-    },
-    '+=1.4'
-  )
+  let tl = gsap.timeline({ paused: true, onComplete: () => lenis.play() })
+  tl.from(letters.chars, {
+    autoAlpha: 0,
+    scale: 0.2,
+    yPercent: -20,
+    duration: 0.2,
+    stagger: { amount: 0.8 },
+  })
+    .from(
+      '.project-number-hero',
+      {
+        autoAlpha: 0,
+        yPercent: -100,
+        duration: 0.8,
+      },
+      '-=0.6'
+    )
     .from(
       '.nav-item',
       {
@@ -44,15 +51,7 @@ const otherEnter = (data) => {
       },
       '<'
     )
-
-  if (data.next.namespace == 'archives') {
-    let video = data.next.container.querySelector('video')
-    video.muted = true
-    video.play()
-    return tl
-  } else {
-    return tl
-  }
+  window.addEventListener('load', () => tl.play())
 }
 
-export default otherEnter
+export default projectOnce

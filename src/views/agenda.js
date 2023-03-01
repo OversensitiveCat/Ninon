@@ -157,6 +157,9 @@ const agenda = () => {
     let checkboxs = gsap.utils.toArray('.check-box')
     checkboxs.forEach((checkbox) => {
       checkbox.addEventListener('click', () => {
+        console.log(checkbox.checked)
+      })
+      checkbox.addEventListener('click', () => {
         if (checkbox.classList.contains('w--redirected-checked') == false) {
           switch (checkboxs.indexOf(checkbox)) {
             case 0:

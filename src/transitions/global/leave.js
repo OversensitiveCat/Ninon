@@ -3,7 +3,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
 gsap.registerPlugin(ScrollToPlugin)
 
-const leaveTransition = (done) => {
+const leaveTransition = (data, done) => {
   const shape1 =
     'M 469.539 263.9868 q -235.539 0 -469.539 0 L 0 104 c 226 -93 314 -26 469.539 0 V 263.9868 z z'
   const shape2 =
@@ -13,6 +13,7 @@ const leaveTransition = (done) => {
     onComplete: () => {
       done()
       gsap.to(window, { scrollTo: 0, duration: 0 })
+      data.current.container.remove()
     },
   })
   leave
