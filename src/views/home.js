@@ -48,9 +48,12 @@ const home = () => {
       //   }
       // })
       // SLIDE PROJETS
+
+      const section = document.querySelector('.section-projets')
+
       gsap.to('.project-one', {
         scrollTrigger: {
-          trigger: '.section-projets',
+          trigger: section,
           start: 'top top',
           end: '20% top',
           scrub: true,
@@ -59,7 +62,7 @@ const home = () => {
       })
       gsap.to('.project-two', {
         scrollTrigger: {
-          trigger: '.section-projets',
+          trigger: section,
           start: '20% top',
           end: '40% top',
           scrub: true,
@@ -68,7 +71,7 @@ const home = () => {
       })
       gsap.to('.project-three', {
         scrollTrigger: {
-          trigger: '.section-projets',
+          trigger: section,
           start: '40% top',
           end: '60% top',
           scrub: true,
@@ -77,12 +80,33 @@ const home = () => {
       })
       gsap.to('.project-four', {
         scrollTrigger: {
-          trigger: '.section-projets',
+          trigger: section,
           start: '60% top',
           end: '80% top',
           scrub: true,
         },
         scale: 1,
+      })
+
+      let sectionHeight,
+        distance,
+        projetUn,
+        projetDeux,
+        projetTrois,
+        projetQuatre
+      function getPosition() {
+        sectionHeight = section.clientHeight
+        distance = section.getBoundingClientRect().top + window.scrollY
+        projetUn = distance + (sectionHeight / 100) * 20
+        projetDeux = distance + (sectionHeight / 100) * 40
+        projetTrois = distance + (sectionHeight / 100) * 60
+        projetQuatre = distance + (sectionHeight / 100) * 80
+        console.log(distance, projetUn, projetDeux, projetTrois, projetQuatre)
+      }
+      getPosition()
+
+      window.addEventListener('resize', () => {
+        getPosition()
       })
 
       const circles = gsap.utils.toArray('.circles-container > .circle')

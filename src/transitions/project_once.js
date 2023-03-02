@@ -1,10 +1,7 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-import lenis from '../views/global/lenis'
-
 const projectOnce = () => {
-  lenis.stop()
   let letters = new SplitType('.heading1', {
     types: 'chars',
     tagName: 'span',
@@ -13,7 +10,7 @@ const projectOnce = () => {
     types: 'chars',
     tagName: 'span',
   })
-  let tl = gsap.timeline({ paused: true, onComplete: () => lenis.play() })
+  let tl = gsap.timeline({ paused: true })
   tl.from(letters.chars, {
     autoAlpha: 0,
     scale: 0.2,
