@@ -7,6 +7,10 @@ const nav = (data) => {
   function navFunction() {
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
+      if (data.next.namespace == 'home' || data.next.namespace == 'galerie') {
+        gsap.set('.nav-projets', { backgroundColor: '#141313' })
+      }
+
       const links = gsap.utils.toArray('.nav-item'),
         white = '#f7f4f4',
         red = '#a80000',

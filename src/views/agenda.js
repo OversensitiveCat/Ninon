@@ -33,7 +33,7 @@ const agenda = () => {
     gsap.set(form, { autoAlpha: 0 })
     let dropForm = gsap.timeline({ paused: true })
     dropForm
-      .to('.filter-arrow', { rotate: -43 })
+      .to('.filter-arrow', { rotate: -180 })
       .to(form, { autoAlpha: 1, height: 'auto' }, '<')
     function drop() {
       if (dropForm.progress() == 0) {

@@ -3,26 +3,74 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
 
-import lenis from '../views/global/lenis'
-
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const homeOnce = () => {
   const letters = gsap.utils.toArray(
     '.section-hero-home .cls-1, .section-hero-home .cls-3'
   )
+
   let lettersNav = new SplitType('.nav-heading', {
     types: 'chars',
     tagName: 'span',
   })
-  let height = window.innerHeight
-  lenis.stop()
+
+  let hero = true
+  ScrollTrigger.create({
+    trigger: '.section-hero-home',
+    start: 'bottom top',
+    onEnter: () => {
+      hero = false
+    },
+  })
+  function scroll() {
+    if (hero === true) {
+      gsap.to(window, {
+        scrollTo: '.nav-bar-sticky',
+        duration: 1,
+        ease: 'power1.inOut',
+      })
+    }
+  }
+
+  const nav = gsap.timeline({ paused: true })
+
+  nav
+    .from('.nav-item', {
+      autoAlpha: 0,
+      yPercent: 100,
+      duration: 0.4,
+      stagger: { amount: 1 },
+    })
+    .from(
+      lettersNav.chars,
+      {
+        autoAlpha: 0,
+        scale: 0.2,
+        yPercent: -20,
+        duration: 0.2,
+        stagger: { amount: 0.5 },
+      },
+      '<'
+    )
+
+  ScrollTrigger.create({
+    trigger: '.nav-bar-sticky',
+    start: 'top 60%',
+    onEnter: () => nav.play(),
+  })
+  ScrollTrigger.create({
+    trigger: '.nav-bar-sticky',
+    start: 'top bottom',
+    onLeaveBack: () => {
+      nav.progress(0)
+      nav.pause()
+    },
+  })
 
   let tl = gsap.timeline({
     paused: true,
-    onComplete: () => {
-      lenis.start()
-    },
+    onComplete: () => scroll(),
   })
   tl.to('.hide', { autoAlpha: 0, duration: 0.4 })
     .from(letters, {
@@ -48,30 +96,6 @@ const homeOnce = () => {
       },
       '-=1'
     )
-    .to(
-      window,
-      { scrollTo: height, duration: 0.8, ease: 'power1.inOut' },
-      '-=0.2'
-    )
-    .from('.nav-item', {
-      autoAlpha: 0,
-      yPercent: 100,
-      duration: 0.4,
-      stagger: { amount: 1 },
-    })
-    .from(
-      lettersNav.chars,
-      {
-        autoAlpha: 0,
-        scale: 0.2,
-        yPercent: -20,
-        duration: 0.2,
-        stagger: { amount: 0.5 },
-      },
-      '<'
-    )
-    .from('.image-about', { opacity: 0, yPercent: 30, duration: 0.8 }, '-=0.6')
-
   window.addEventListener('load', () => tl.play())
 }
 

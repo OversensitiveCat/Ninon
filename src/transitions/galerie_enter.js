@@ -6,6 +6,24 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollTrigger, Observer)
 
 const galerieEnter = () => {
+  let down, up
+  let mm = gsap.matchMedia()
+  mm.add(
+    {
+      isDesktop: `(min-width: 992px)`,
+      isNotDesktop: `(max-width: 991px)`,
+    },
+    (context) => {
+      let { isDesktop, isNotDesktop } = context.conditions
+      if (isDesktop) {
+        down = 30
+        up = 10
+      } else if (isNotDesktop) {
+        down = 20
+        up = 0
+      }
+    }
+  )
   let letters = new SplitType('.heading1', {
     types: 'chars',
     tagName: 'span',
@@ -17,6 +35,7 @@ const galerieEnter = () => {
   const photosItem = gsap.utils.toArray('.photos-item')
 
   let tl = gsap.timeline({ paused: true })
+
   tl.from(letters.chars, {
     autoAlpha: 0,
     scale: 0.2,
@@ -45,12 +64,12 @@ const galerieEnter = () => {
       },
       '<'
     )
-    .from(photosItem[0], { opacity: 0, yPercent: 20 }, '-=0.8')
-    .from(photosItem[2], { opacity: 0, yPercent: 20 }, '-=0.6')
+    .from(photosItem[0], { opacity: 0, yPercent: 20, duration: 0.9 }, '-=0.8')
+    .from(photosItem[2], { opacity: 0, yPercent: 20, duration: 0.9 }, '-=0.6')
     .fromTo(
       photosItem[1],
-      { opacity: 0, yPercent: 30 },
-      { opacity: 1, yPercent: 10 },
+      { opacity: 0, yPercent: down, duration: 0.9 },
+      { opacity: 1, yPercent: up, duration: 0.9 },
       '-=0.7'
     )
     .from('.max-width > .loading-line-box', { opacity: 0, yPercent: 60 }, '-=1')

@@ -14,16 +14,19 @@ const navProjets = () => {
       tl.to(button, {
         height: 'auto',
         duration: 0.6,
-      }).to(
-        items,
-        {
-          autoAlpha: 1,
-          stagger: 0.2,
-          duration: 0.3,
-          yPercent: 25,
-        },
-        '<'
-      )
+      })
+        .to(
+          items,
+          {
+            autoAlpha: 1,
+            stagger: 0.2,
+            duration: 0.3,
+            yPercent: 25,
+          },
+          0
+        )
+        .to('.project-arrow-nav', { rotate: 90 }, 0)
+
       button.addEventListener('mouseenter', () => {
         tl.play()
       })

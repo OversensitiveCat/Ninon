@@ -13,42 +13,85 @@ const home = () => {
       video.muted = true
       video.play()
     })
+
+    const langButtons = gsap.utils.toArray('.lang-text')
+    const text = gsap.utils.toArray('.bio-highlight-para, .bio-para')
+
+    function removeFr(para) {
+      return para.classList.contains('en')
+    }
+    function removeEn(para) {
+      if (para.classList.contains('en')) {
+        return false
+      } else return true
+    }
+    const en = text.filter(removeFr)
+    const fr = text.filter(removeEn)
+    let tl = gsap.timeline()
+
+    gsap.set(en, { autoAlpha: 0 })
+    langButtons[0].addEventListener('click', () => {
+      if (langButtons[0].classList.contains('active')) {
+        return console.log('nope, is already in french')
+      } else {
+        tl.to(en, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power1.in',
+        })
+          .to(fr, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' })
+          .set(en, { autoAlpha: 0 })
+        langButtons[2].classList.remove('active')
+        langButtons[0].classList.add('active')
+      }
+    })
+    langButtons[2].addEventListener('click', () => {
+      if (langButtons[2].classList.contains('active')) {
+        return console.log('nope, is already in english')
+      } else {
+        tl.to(fr, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power1.in',
+        })
+          .to(en, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' })
+          .set(fr, { autoAlpha: 0 })
+        langButtons[0].classList.remove('active')
+        langButtons[2].classList.add('active')
+      }
+    })
+
+    const ecouter = document.querySelector('.button-ecouter')
+    ecouter.addEventListener('click', () => {
+      gsap.to(window, {
+        scrollTo: '.section-ecouter',
+        duration: 2,
+        ease: 'power1.inOut',
+      })
+    })
+
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
-      // // ECLATER
-      // let letters = new SplitType('.eclater', {
-      //   types: 'chars',
-      //   tagName: 'span',
-      // })
-      // // const letters = gsap.utils.toArray('.eclater .char')
-      // letters.chars.forEach((letter) => {
-      //   let index = letters.chars.indexOf(letter)
-      //   if (index % 2 == 0) {
-      //     gsap.to(letter, {
-      //       scrollTrigger: {
-      //         trigger: '.eclater',
-      //         scrub: true,
-      //         start: 'top 70%',
-      //         end: 'top 20%',
-      //       },
-      //       yPercent: -8,
-      //       rotate: -5,
-      //     })
-      //   } else {
-      //     gsap.to(letter, {
-      //       scrollTrigger: {
-      //         trigger: '.eclater',
-      //         scrub: true,
-      //         start: 'top 70%',
-      //         end: 'top 20%',
-      //       },
-      //       yPercent: 8,
-      //       rotate: 5,
-      //     })
-      //   }
-      // })
-      // SLIDE PROJETS
+      // Buttons about hover
+      const buttonsAbout = gsap.utils.toArray('.button-dates, .button-ecouter')
+      buttonsAbout.forEach((button) => {
+        button.addEventListener('mouseenter', () => {
+          if (buttonsAbout.indexOf(button) === 0) {
+            gsap.to(button, { scale: 1.05, duration: 0.25, rotate: -20 })
+          } else {
+            gsap.to(button, { scale: 1.05, duration: 0.25, rotate: 20 })
+          }
+        })
+        button.addEventListener('mouseleave', () => {
+          if (buttonsAbout.indexOf(button) === 0) {
+            gsap.to(button, { scale: 1, duration: 0.25, rotate: 0 })
+          } else {
+            gsap.to(button, { scale: 1, duration: 0.25, rotate: 0 })
+          }
+        })
+      })
 
+      // SLIDE PROJETS
       const section = document.querySelector('.section-projets')
 
       gsap.to('.project-one', {
@@ -88,6 +131,8 @@ const home = () => {
         scale: 1,
       })
 
+      // Nav circles
+
       let sectionHeight,
         distance,
         projetUn,
@@ -101,7 +146,6 @@ const home = () => {
         projetDeux = distance + (sectionHeight / 100) * 40
         projetTrois = distance + (sectionHeight / 100) * 60
         projetQuatre = distance + (sectionHeight / 100) * 80
-        console.log(distance, projetUn, projetDeux, projetTrois, projetQuatre)
       }
       getPosition()
 
@@ -109,7 +153,28 @@ const home = () => {
         getPosition()
       })
 
+      function scroll(position) {
+        return gsap.to(window, {
+          scrollTo: position,
+          duration: 1,
+          ease: 'power1.inOut',
+        })
+      }
+
       const circles = gsap.utils.toArray('.circles-container > .circle')
+      circles[0].addEventListener('click', () => {
+        scroll(projetUn)
+      })
+      circles[1].addEventListener('click', () => {
+        scroll(projetDeux)
+      })
+      circles[2].addEventListener('click', () => {
+        scroll(projetTrois)
+      })
+      circles[3].addEventListener('click', () => {
+        scroll(projetQuatre)
+      })
+
       gsap.to(circles[0], { backgroundColor: '#a80000' })
       function transformCircle(a, b) {
         gsap.to(circles[a], {
@@ -239,10 +304,16 @@ const home = () => {
 
       function goLeft() {
         if (percent == 0) {
-          gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
+          gsap.to('#arrow-video-left', {
+            attr: { stroke: '#201f1f' },
+            duration: 0.25,
+          })
         }
         if (percent == -66) {
-          gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
+          gsap.to('#arrow-video-right', {
+            attr: { stroke: '#a80000' },
+            duration: 0.25,
+          })
         }
         if (percent == 33) {
           return
@@ -257,10 +328,16 @@ const home = () => {
 
       function goRight() {
         if (percent == -33) {
-          gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
+          gsap.to('#arrow-video-right', {
+            attr: { stroke: '#201f1f' },
+            duration: 0.25,
+          })
         }
         if (percent == 33) {
-          gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
+          gsap.to('#arrow-video-left', {
+            attr: { stroke: '#a80000' },
+            duration: 0.25,
+          })
         }
         if (percent == -66) {
           return

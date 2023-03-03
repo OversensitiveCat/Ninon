@@ -12,7 +12,7 @@ const galerie = () => {
       photosBox = gsap.utils.toArray('.photo-box'),
       photosItem = gsap.utils.toArray('.photos-item')
     let percent = 0,
-      width = 25,
+      width = 34,
       widthPercent = width + '%',
       active = 1,
       largBox = photo.offsetWidth,
@@ -26,19 +26,6 @@ const galerie = () => {
       },
       (context) => {
         let { isDesktop, isTablet, isMobile } = context.conditions
-
-        if (isDesktop) {
-          console.log('Desktop')
-        }
-        if (isDesktop == false) {
-          console.log('Not desktop')
-        }
-        if (isTablet && isMobile == false) {
-          console.log('Tablet')
-        }
-        if (isMobile) {
-          console.log('Mobile')
-        }
 
         function boxSize() {
           photosBox.forEach((box) => {
@@ -68,13 +55,15 @@ const galerie = () => {
           gsap.to('.photos-wrapper', {
             xPercent: percent,
             duration: isDesktop ? 0.6 : 0.4,
-            ease: 'none',
+            ease: 'power1.out',
           })
-          gsap.to('.loading-line-galerie', {
-            width: widthPercent,
-            duration: isDesktop ? 0.6 : 0.4,
-            ease: 'none',
-          })
+          if (isMobile === false) {
+            gsap.to('.loading-line-galerie', {
+              width: widthPercent,
+              duration: isDesktop ? 0.6 : 0.4,
+              ease: 'power1.inOut',
+            })
+          }
           if (isDesktop) {
             photosItem.forEach((item) => {
               if (photosItem.indexOf(item) == active) {
@@ -97,101 +86,110 @@ const galerie = () => {
         function goLeft() {
           if (isDesktop) {
             if (percent == 0) {
-              gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
+              gsap.to('#arrow-video-left', {
+                attr: { stroke: '#201f1f' },
+                duration: 0.25,
+              })
             }
-            if (percent == -60) {
-              gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
+            if (percent == -66) {
+              gsap.to('#arrow-video-right', {
+                attr: { stroke: '#a80000' },
+                duration: 0.25,
+              })
             }
-            if (percent == 20) {
+            if (percent == 33) {
               return
             } else {
-              percent += 20
-              width -= 25
+              percent += 33
+              width -= 34
               active -= 1
               widthPercent = width + '%'
               transform()
             }
           }
           if (isTablet && isMobile == false) {
-            if (percent == -20) {
-              gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
+            if (percent == 0) {
+              gsap.to('#arrow-video-left', {
+                attr: { stroke: '#201f1f' },
+                duration: 0.25,
+              })
             }
-            if (percent == -60) {
-              gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
+            if (percent == -50) {
+              gsap.to('#arrow-video-right', {
+                attr: { stroke: '#a80000' },
+                duration: 0.25,
+              })
             }
             if (percent == 0) {
               return
             } else {
-              percent += 20
-              width -= 25
+              percent += 25
+              width -= 34
               widthPercent = width + '%'
               transform()
             }
           }
           if (isMobile) {
-            if (percent == -20) {
+            if (percent == -25) {
               gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
             }
-            if (percent == -80) {
+            if (percent == -75) {
               gsap.to('#arrow-video-right', { attr: { stroke: '#a80000' } })
             }
             if (percent == 0) {
               return
             } else {
-              percent += 20
-              width -= 25
-              widthPercent = width + '%'
+              percent += 25
               transform()
             }
           }
+          console.log(percent, width)
         }
         function goRight() {
           if (isDesktop) {
-            if (percent == -40) {
+            if (percent == -33) {
               gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
             }
-            if (percent == 20) {
+            if (percent == 33) {
               gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
             }
-            if (percent == -60) {
+            if (percent == -66) {
               return
             } else {
-              percent -= 20
-              width += 25
+              percent -= 33
+              width += 34
               active += 1
               widthPercent = width + '%'
               transform()
             }
           }
           if (isTablet && isMobile == false) {
-            if (percent == -40) {
+            if (percent == -25) {
               gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
             }
             if (percent == 0) {
               gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
             }
-            if (percent == -60) {
+            if (percent == -50) {
               return
             } else {
-              percent -= 20
-              width += 25
+              percent -= 25
+              width += 34
               widthPercent = width + '%'
               transform()
             }
           }
           if (isMobile) {
-            if (percent == -60) {
+            if (percent == -50) {
               gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
             }
             if (percent == 0) {
               gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
             }
-            if (percent == -80) {
+            if (percent == -75) {
               return
             } else {
-              percent -= 20
-              width += 25
-              widthPercent = width + '%'
+              percent -= 25
               transform()
             }
           }
@@ -207,7 +205,7 @@ const galerie = () => {
           }
         })
 
-        // IPAD ET MOBILE
+        // TABLETTE ET MOBILE
         if (isDesktop == false) {
           gsap.to('#arrow-video-left', { attr: { stroke: '#201f1f' } })
           Observer.create({
