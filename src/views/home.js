@@ -73,20 +73,26 @@ const home = () => {
     let mm = gsap.matchMedia()
     mm.add('(min-width: 992px)', () => {
       // Buttons about hover
-      const buttonsAbout = gsap.utils.toArray('.button-dates, .button-ecouter')
-      buttonsAbout.forEach((button) => {
+      const buttons = gsap.utils.toArray(
+        '.button-dates, .button-ecouter, .agenda-button'
+      )
+      buttons.forEach((button) => {
         button.addEventListener('mouseenter', () => {
-          if (buttonsAbout.indexOf(button) === 0) {
+          if (buttons.indexOf(button) === 0) {
             gsap.to(button, { scale: 1.05, duration: 0.25, rotate: -20 })
-          } else {
+          } else if (buttons.indexOf(button) === 1) {
             gsap.to(button, { scale: 1.05, duration: 0.25, rotate: 20 })
+          } else {
+            gsap.to(button, { scale: 1.05, duration: 0.25 })
           }
         })
         button.addEventListener('mouseleave', () => {
-          if (buttonsAbout.indexOf(button) === 0) {
+          if (buttons.indexOf(button) === 0) {
+            gsap.to(button, { scale: 1, duration: 0.25, rotate: 0 })
+          } else if (buttons.indexOf(button) === 1) {
             gsap.to(button, { scale: 1, duration: 0.25, rotate: 0 })
           } else {
-            gsap.to(button, { scale: 1, duration: 0.25, rotate: 0 })
+            gsap.to(button, { scale: 1, duration: 0.25 })
           }
         })
       })
