@@ -190,7 +190,7 @@ const animations = () => {
             })
             ScrollTrigger.create({
               trigger: div,
-              start: isDesktop ? 'top 70%' : 'top 80%',
+              start: isDesktop ? 'top 80%' : 'top 85%',
               onEnter: () => tl.play(),
             })
           } else if (div.dataset.anim == 2) {

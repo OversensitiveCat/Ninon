@@ -143,7 +143,6 @@ const galerie = () => {
               transform()
             }
           }
-          console.log(percent, width)
         }
         function goRight() {
           if (isDesktop) {

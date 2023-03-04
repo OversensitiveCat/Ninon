@@ -13,6 +13,7 @@ import projectOnce from './transitions/project_once'
 import agenda from './views/agenda'
 import galerie from './views/galerie'
 import animations from './views/global/animations'
+import language from './views/global/lang'
 import mobileHeight from './views/global/mobileHeight'
 import nav from './views/global/nav'
 import navProjets from './views/global/nav_projets'
@@ -29,12 +30,13 @@ barba.hooks.beforeEnter((data) => {
 })
 
 barba.hooks.afterEnter((data) => {
-  animations(),
-    setLenis(),
-    setNavMob(data),
-    setContact(data),
-    navProjets(),
-    nav(data)
+  animations()
+  setLenis()
+  setNavMob(data)
+  setContact(data)
+  navProjets()
+  nav(data)
+  language(data)
 })
 
 barba.init({

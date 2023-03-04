@@ -14,53 +14,6 @@ const home = () => {
       video.play()
     })
 
-    const langButtons = gsap.utils.toArray('.lang-text')
-    const text = gsap.utils.toArray('.bio-highlight-para, .bio-para')
-
-    function removeFr(para) {
-      return para.classList.contains('en')
-    }
-    function removeEn(para) {
-      if (para.classList.contains('en')) {
-        return false
-      } else return true
-    }
-    const en = text.filter(removeFr)
-    const fr = text.filter(removeEn)
-    let tl = gsap.timeline()
-
-    gsap.set(en, { autoAlpha: 0 })
-    langButtons[0].addEventListener('click', () => {
-      if (langButtons[0].classList.contains('active')) {
-        return console.log('nope, is already in french')
-      } else {
-        tl.to(en, {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power1.in',
-        })
-          .to(fr, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' })
-          .set(en, { autoAlpha: 0 })
-        langButtons[2].classList.remove('active')
-        langButtons[0].classList.add('active')
-      }
-    })
-    langButtons[2].addEventListener('click', () => {
-      if (langButtons[2].classList.contains('active')) {
-        return console.log('nope, is already in english')
-      } else {
-        tl.to(fr, {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power1.in',
-        })
-          .to(en, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' })
-          .set(fr, { autoAlpha: 0 })
-        langButtons[0].classList.remove('active')
-        langButtons[2].classList.add('active')
-      }
-    })
-
     const ecouter = document.querySelector('.button-ecouter')
     ecouter.addEventListener('click', () => {
       gsap.to(window, {
@@ -196,7 +149,7 @@ const home = () => {
       }
 
       function linkOne() {
-        barba.go('./programme-2023')
+        barba.go('./solo')
       }
       function linkTwo() {
         barba.go('./royaumont')
@@ -284,7 +237,7 @@ const home = () => {
 
       let current = 1
       let percent = 0
-      let width = 33
+      let width = 34
       let widthPercent = width + '%'
 
       const transform = () => {
@@ -315,42 +268,42 @@ const home = () => {
             duration: 0.25,
           })
         }
-        if (percent == -66) {
+        if (percent == -68) {
           gsap.to('#arrow-video-right', {
             attr: { stroke: '#a80000' },
             duration: 0.25,
           })
         }
-        if (percent == 33) {
+        if (percent == 34) {
           return
         } else {
-          percent += 33
+          percent += 34
           current -= 1
-          width -= 33
+          width -= 34
           widthPercent = width + '%'
           transform()
         }
       }
 
       function goRight() {
-        if (percent == -33) {
+        if (percent == -34) {
           gsap.to('#arrow-video-right', {
             attr: { stroke: '#201f1f' },
             duration: 0.25,
           })
         }
-        if (percent == 33) {
+        if (percent == 34) {
           gsap.to('#arrow-video-left', {
             attr: { stroke: '#a80000' },
             duration: 0.25,
           })
         }
-        if (percent == -66) {
+        if (percent == -68) {
           return
         } else {
-          percent -= 33
+          percent -= 34
           current += 1
-          width += 33
+          width += 34
           widthPercent = width + '%'
           transform()
         }
