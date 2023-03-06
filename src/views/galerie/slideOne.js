@@ -24,23 +24,64 @@ function init() {
   widthPercent = width + '%'
 
   mm.add('(min-width: 992px)', () => {
-    gsap.set('#arrow-video-left, #arrow-video-right ', {
+    gsap.set('#arrow-left1, #arrow-right1', {
       attr: { stroke: '#a80000' },
     })
   })
   mm.add('(max-width: 991px)', () => {
-    gsap.set('#arrow-video-left', { attr: { stroke: '#201f1f' } })
-    gsap.set('#arrow-video-right', { attr: { stroke: '#a80000' } })
+    gsap.set('#arrow-left1', { attr: { stroke: '#201f1f' } })
+    gsap.set('#arrow-right1', { attr: { stroke: '#a80000' } })
+  })
+}
+
+function sizes() {
+  const container = document.querySelector('.photos-container'),
+    photosBox = gsap.utils.toArray('.photo-box'),
+    photosItem = gsap.utils.toArray('.photos-item'),
+    photo = document.querySelector('.photo')
+
+  let mm = gsap.matchMedia()
+  // DESKTOP
+  mm.add('(min-width: 992px)', () => {
+    // box width
+    photosBox.forEach((box) => {
+      if (photosBox.indexOf(box) == active) {
+        gsap.set(box, { height: 'auto' })
+      } else {
+        gsap.set(box, { height: photo.offsetWidth })
+      }
+    })
+    // container height
+    gsap.to(container, {
+      height: 'auto',
+      duration: 0,
+      onComplete: () => {
+        gsap.to(container, { height: container.offsetHeight, duration: 0 })
+      },
+    })
+  })
+
+  // TABLET AND MOBILE
+  mm.add('(max-width: 991px)', () => {
+    // box width
+    photosItem.forEach((item) => {
+      gsap.set(item, { yPercent: 0 })
+    })
+    photosBox.forEach((box) => {
+      gsap.set(box, { height: 'auto' })
+    })
+    // container height
+    gsap.set(container, { height: 'auto' })
   })
 }
 
 function transform() {
-  const photosBox = gsap.utils.toArray('.photo-box'),
-    photosItem = gsap.utils.toArray('.photos-item'),
-    photo = document.querySelector('.photo')
+  const photosBox = gsap.utils.toArray('.portraits .photo-box'),
+    photosItem = gsap.utils.toArray('.portraits .photos-item'),
+    photo = document.querySelector('.portraits .photo')
 
   // ALL
-  gsap.to('.photos-wrapper', {
+  gsap.to('.portraits .photos-wrapper', {
     xPercent: percent,
     duration: 0.7,
   })
@@ -48,7 +89,7 @@ function transform() {
   let mm = gsap.matchMedia()
   // TABLET & DESKTOP
   mm.add('(min-width: 768px)', () => {
-    gsap.to('.loading-line-galerie', {
+    gsap.to('.portraits .loading-line-galerie', {
       width: widthPercent,
       duration: 0.7,
     })
@@ -75,7 +116,6 @@ function transform() {
 
 function attributeValues() {
   let mm = gsap.matchMedia()
-
   mm.add(
     {
       isDesktop: '(min-width: 992px)',
@@ -121,15 +161,22 @@ function attributeValues() {
   )
 }
 
-function goLeft() {
+function settingsOne() {
+  init()
+  attributeValues()
+  transform()
+  sizes()
+}
+
+function goLeftOne() {
   if (percent == arrowLeftOff) {
-    gsap.to('#arrow-video-left', {
+    gsap.to('#arrow-left1', {
       attr: { stroke: '#201f1f' },
       duration: 0.25,
     })
   }
   if (percent == arrowRightOn) {
-    gsap.to('#arrow-video-right', {
+    gsap.to('#arrow-right1', {
       attr: { stroke: '#a80000' },
       duration: 0.25,
     })
@@ -145,12 +192,12 @@ function goLeft() {
   }
 }
 
-function goRight() {
+function goRightOne() {
   if (percent == arrowRightOff) {
-    gsap.to('#arrow-video-right', { attr: { stroke: '#201f1f' } })
+    gsap.to('#arrow-right1', { attr: { stroke: '#201f1f' } })
   }
   if (percent == arrowLeftOn) {
-    gsap.to('#arrow-video-left', { attr: { stroke: '#a80000' } })
+    gsap.to('#arrow-left1', { attr: { stroke: '#a80000' } })
   }
   if (percent == stopRight) {
     return
@@ -163,85 +210,4 @@ function goRight() {
   }
 }
 
-function keysGalerie(e) {
-  if (e.key == 'ArrowLeft') {
-    goLeft()
-  } else if (e.key == 'ArrowRight') {
-    goRight()
-  }
-}
-
-function sizes() {
-  const container = document.querySelector('.photos-container'),
-    photosBox = gsap.utils.toArray('.photo-box'),
-    photosItem = gsap.utils.toArray('.photos-item'),
-    photo = document.querySelector('.photo')
-
-  let mm = gsap.matchMedia()
-  // DESKTOP
-  mm.add('(min-width: 992px)', () => {
-    // box width
-    photosBox.forEach((box) => {
-      if (photosBox.indexOf(box) == active) {
-        gsap.set(box, { height: 'auto' })
-      } else {
-        gsap.set(box, { height: photo.offsetWidth })
-      }
-    })
-    // container height
-    gsap.to(container, {
-      height: 'auto',
-      duration: 0,
-      onComplete: () => {
-        gsap.to(container, { height: container.offsetHeight, duration: 0 })
-      },
-    })
-  })
-
-  // TABLET AND MOBILE
-  mm.add('(max-width: 991px)', () => {
-    // box width
-    photosItem.forEach((item) => {
-      gsap.set(item, { yPercent: 0 })
-    })
-    photosBox.forEach((box) => {
-      gsap.set(box, { height: 'auto' })
-    })
-    // container height
-    gsap.set(container, { height: 'auto' })
-  })
-}
-
-const slideGalerie = () => {
-  // ALL
-  init()
-  attributeValues()
-  transform()
-  sizes()
-  window.addEventListener('resize', () => {
-    init()
-    attributeValues()
-    transform()
-    sizes()
-  })
-  // Add Events
-  const arrows = gsap.utils.toArray('.arrow-galerie')
-  arrows[0].addEventListener('click', goLeft)
-  arrows[1].addEventListener('click', goRight)
-  window.addEventListener('keydown', keysGalerie)
-  console.log('add galerie events')
-
-  // Add touch event for tablet & mobile
-  let mm = gsap.matchMedia()
-  mm.add('(max-width: 991px)', () => {
-    Observer.create({
-      target: '.photos-container',
-      type: 'touch',
-      tolerance: 60,
-      onRight: () => goLeft(),
-      onLeft: () => goRight(),
-    })
-  })
-}
-
-export { slideGalerie, keysGalerie }
+export { goLeftOne, goRightOne, settingsOne }

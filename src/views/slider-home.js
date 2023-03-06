@@ -163,8 +163,6 @@ const slideHome = () => {
   mm.add('(min-width: 992px)', () => {})
   window.addEventListener('keydown', keysHome)
 
-  console.log('add home events')
-
   // TABLET & MOBILE
   mm.add('(max-width: 991px)', () => {
     gsap.set('#arrow-video-left', { attr: { stroke: '#201f1f' } })

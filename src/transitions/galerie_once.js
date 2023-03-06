@@ -24,7 +24,7 @@ const galerieOnce = () => {
       }
     }
   )
-  let letters = new SplitType('.heading1', {
+  let letters = new SplitType('.heading1-galerie', {
     types: 'chars',
     tagName: 'span',
   })
@@ -32,9 +32,10 @@ const galerieOnce = () => {
     types: 'chars',
     tagName: 'span',
   })
-  const photosItem = gsap.utils.toArray('.photos-item')
+  const photosItem = gsap.utils.toArray('.portraits .photos-item')
 
   let tl = gsap.timeline({ paused: true })
+
   tl.from(
     letters.chars,
     {
@@ -54,7 +55,7 @@ const galerieOnce = () => {
         duration: 0.4,
         stagger: { amount: 1 },
       },
-      '-=0.2'
+      '-=0.1'
     )
     .from(
       lettersNav.chars,
@@ -67,18 +68,25 @@ const galerieOnce = () => {
       },
       '<'
     )
-    .from(photosItem[0], { opacity: 0, yPercent: 20 }, '-=0.8')
+    .from(
+      '.portraits .heading2-galerie',
+      {
+        opacity: 0,
+        yPercent: -20,
+      },
+      '-=1.2'
+    )
+    .from(photosItem[0], { opacity: 0, yPercent: 20 }, '-=1')
     .from(photosItem[2], { opacity: 0, yPercent: 20 }, '-=0.6')
     .fromTo(
       photosItem[1],
       { opacity: 0, yPercent: down },
       { opacity: 1, yPercent: up },
-      '-=0.7'
+      '-=0.8'
     )
-    .from('.max-width > .loading-line-box', { opacity: 0, yPercent: 60 }, '-=1')
-    .from('.link-out.global', { opacity: 0, yPercent: 20 }, '-=0.8')
+    .from('.portraits .loading-line-box', { opacity: 0, yPercent: 500 }, '<')
     .from(
-      '.nav-galerie',
+      '.portraits .nav-galerie',
       {
         opacity: 0,
         rotate: 360,
@@ -86,8 +94,10 @@ const galerieOnce = () => {
         xPercent: -50,
         duration: 0.7,
       },
-      '<'
+      '-=0.4'
     )
+    .from('.portraits .link-out.global', { opacity: 0, yPercent: 50 }, '-=0.4')
+
   window.addEventListener('load', () => tl.play())
 }
 

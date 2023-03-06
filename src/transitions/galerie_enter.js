@@ -24,7 +24,7 @@ const galerieEnter = () => {
       }
     }
   )
-  let letters = new SplitType('.heading1', {
+  let letters = new SplitType('.heading1-galerie', {
     types: 'chars',
     tagName: 'span',
   })
@@ -32,17 +32,20 @@ const galerieEnter = () => {
     types: 'chars',
     tagName: 'span',
   })
-  const photosItem = gsap.utils.toArray('.photos-item')
+  const photosItem = gsap.utils.toArray('.portraits .photos-item')
 
   let tl = gsap.timeline({ paused: true })
-
-  tl.from(letters.chars, {
-    autoAlpha: 0,
-    scale: 0.2,
-    yPercent: -20,
-    duration: 0.2,
-    stagger: { amount: 0.5 },
-  })
+  tl.from(
+    letters.chars,
+    {
+      autoAlpha: 0,
+      scale: 0.2,
+      yPercent: -20,
+      duration: 0.2,
+      stagger: { amount: 0.5 },
+    },
+    '+=0.8'
+  )
     .from(
       '.nav-item',
       {
@@ -51,7 +54,7 @@ const galerieEnter = () => {
         duration: 0.4,
         stagger: { amount: 1 },
       },
-      '-=0.2'
+      '-=0.1'
     )
     .from(
       lettersNav.chars,
@@ -64,18 +67,25 @@ const galerieEnter = () => {
       },
       '<'
     )
-    .from(photosItem[0], { opacity: 0, yPercent: 20, duration: 0.9 }, '-=0.8')
-    .from(photosItem[2], { opacity: 0, yPercent: 20, duration: 0.9 }, '-=0.6')
+    .from(
+      '.portraits .heading2-galerie',
+      {
+        opacity: 0,
+        yPercent: -20,
+      },
+      '-=1.2'
+    )
+    .from(photosItem[0], { opacity: 0, yPercent: 20 }, '-=1')
+    .from(photosItem[2], { opacity: 0, yPercent: 20 }, '-=0.6')
     .fromTo(
       photosItem[1],
-      { opacity: 0, yPercent: down, duration: 0.9 },
-      { opacity: 1, yPercent: up, duration: 0.9 },
-      '-=0.7'
+      { opacity: 0, yPercent: down },
+      { opacity: 1, yPercent: up },
+      '-=0.8'
     )
-    .from('.max-width > .loading-line-box', { opacity: 0, yPercent: 60 }, '-=1')
-    .from('.link-out.global', { opacity: 0, yPercent: 20 }, '-=0.8')
+    .from('.portraits .loading-line-box', { opacity: 0, yPercent: 500 }, '<')
     .from(
-      '.nav-galerie',
+      '.portraits .nav-galerie',
       {
         opacity: 0,
         rotate: 360,
@@ -83,8 +93,9 @@ const galerieEnter = () => {
         xPercent: -50,
         duration: 0.7,
       },
-      '<'
+      '-=0.4'
     )
+    .from('.portraits .link-out.global', { opacity: 0, yPercent: 50 }, '-=0.4')
 
   // BASIC ENTER
   let enter = gsap.timeline({ onComplete: () => tl.play() })
