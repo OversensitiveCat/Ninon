@@ -15,6 +15,7 @@ const animations = () => {
         isMobile: `(max-width: 767px)`,
       },
       (context) => {
+        // eslint-disable-next-line no-unused-vars
         let { isDesktop, isTablet, isMobile } = context.conditions
 
         if (isDesktop) {
@@ -215,12 +216,12 @@ const animations = () => {
             })
           }
         })
-        if (isTablet) {
-          console.log('tablet is', isTablet)
-        }
-        if (isMobile) {
-          console.log('mobile is', isMobile)
-        }
+        // if (isTablet && isMobile === false) {
+        //   console.log('tablet is', isTablet)
+        // }
+        // if (isMobile) {
+        //   console.log('mobile is', isMobile)
+        // }
       }
     )
   }

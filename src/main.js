@@ -11,7 +11,6 @@ import homeOnce from './transitions/home_once'
 import projectEnter from './transitions/project_enter'
 import projectOnce from './transitions/project_once'
 import agenda from './views/agenda'
-import galerie from './views/galerie'
 import animations from './views/global/animations'
 import language from './views/global/lang'
 import mobileHeight from './views/global/mobileHeight'
@@ -21,6 +20,8 @@ import setContact from './views/global/set_contact'
 import setLenis from './views/global/set_lenis'
 import setNavMob from './views/global/set_navMob'
 import home from './views/home'
+import { slideGalerie } from './views/slider-galerie'
+import { slideHome } from './views/slider-home'
 
 barba.use(barbaPrefetch)
 
@@ -46,6 +47,7 @@ barba.init({
       namespace: 'home',
       afterEnter() {
         home()
+        slideHome()
       },
     },
     {
@@ -57,7 +59,7 @@ barba.init({
     {
       namespace: 'galerie',
       afterEnter() {
-        galerie()
+        slideGalerie()
       },
     },
   ],
