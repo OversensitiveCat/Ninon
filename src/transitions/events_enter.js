@@ -5,21 +5,6 @@ import SplitType from 'split-type'
 gsap.registerPlugin(ScrollToPlugin)
 
 const eventsEnter = () => {
-  let mm = gsap.matchMedia()
-  mm.add(
-    {
-      isDesktop: `(min-width: 992px)`,
-      isNotDesktop: `(max-width: 991px)`,
-    },
-    (context) => {
-      let { isDesktop, isNotDesktop } = context.conditions
-      if (isDesktop) {
-        console.log('enter desktop')
-      } else if (isNotDesktop) {
-        console.log('enter mobile')
-      }
-    }
-  )
   let letters = new SplitType('.heading2-galerie', {
     types: 'chars',
     tagName: 'span',
