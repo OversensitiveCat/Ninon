@@ -58,14 +58,14 @@ const slidesGalerie = () => {
     Observer.create({
       target: '.portraits .photos-container',
       type: 'touch',
-      tolerance: 60,
+      tolerance: 80,
       onRight: () => goLeftOne(),
       onLeft: () => goRightOne(),
     })
     Observer.create({
       target: '.events .photos-container',
       type: 'touch',
-      tolerance: 60,
+      tolerance: 80,
       onRight: () => goLeftTwo(),
       onLeft: () => goRightTwo(),
     })

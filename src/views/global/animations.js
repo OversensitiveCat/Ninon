@@ -176,11 +176,15 @@ const animations = () => {
         divs.forEach((div) => {
           if (div.dataset.anim == 1) {
             let tl = gsap.timeline({ paused: true })
-            tl.from(div, {
-              opacity: 0,
-              yPercent: isDesktop ? 60 : 30,
-              duration: isDesktop ? 1 : 0.8,
-            })
+            tl.fromTo(
+              div,
+              {
+                opacity: 0,
+                yPercent: isDesktop ? 60 : 30,
+                duration: isDesktop ? 1 : 0.8,
+              },
+              { opacity: 1, yPercent: 0 }
+            )
             ScrollTrigger.create({
               trigger: div,
               start: isDesktop ? '-50% bottom' : '-25% bottom',
@@ -191,16 +195,20 @@ const animations = () => {
             })
             ScrollTrigger.create({
               trigger: div,
-              start: isDesktop ? 'top 80%' : 'top 85%',
+              start: isDesktop ? 'top 85%' : 'top 90%',
               onEnter: () => tl.play(),
             })
           } else if (div.dataset.anim == 2) {
             let tl = gsap.timeline({ paused: true })
-            tl.from(div, {
-              opacity: 0,
-              yPercent: isDesktop ? 20 : 10,
-              duration: isDesktop ? 1 : 0.8,
-            })
+            tl.fromTo(
+              div,
+              {
+                opacity: 0,
+                yPercent: isDesktop ? 20 : 10,
+                duration: isDesktop ? 1 : 0.8,
+              },
+              { opacity: 1, yPercent: 0 }
+            )
             ScrollTrigger.create({
               trigger: div,
               start: '-20% bottom',
@@ -211,7 +219,7 @@ const animations = () => {
             })
             ScrollTrigger.create({
               trigger: div,
-              start: 'top 80%',
+              start: 'top 85%',
               onEnter: () => tl.play(),
             })
           }

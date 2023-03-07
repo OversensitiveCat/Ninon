@@ -169,7 +169,7 @@ const slideHome = () => {
     Observer.create({
       target: '.videos-container',
       type: 'touch',
-      tolerance: 60,
+      tolerance: 80,
       onRight: () => goLeftHome(),
       onLeft: () => goRightHome(),
     })

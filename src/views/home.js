@@ -259,7 +259,7 @@ const home = () => {
       Observer.create({
         target: '.projects-container',
         type: 'touch',
-        tolerance: 60,
+        tolerance: 80,
         onRight: () => {
           if (per == 0) {
             return
