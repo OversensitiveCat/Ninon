@@ -18,7 +18,7 @@ const home = () => {
     ecouter.addEventListener('click', () => {
       gsap.to(window, {
         scrollTo: '.section-ecouter',
-        duration: 2,
+        duration: 3,
         ease: 'power1.inOut',
       })
     })

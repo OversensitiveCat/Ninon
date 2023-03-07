@@ -1,7 +1,8 @@
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 
-import { keysGalerie } from '../../views/galerie/setSliders'
+import { keysGalerieOne } from '../../views/galerie/setSliders'
+import { keysGalerieTwo } from '../../views/galerie/setSliders'
 import { keysHome } from '../../views/slider-home'
 
 gsap.registerPlugin(ScrollToPlugin)
@@ -11,7 +12,8 @@ const leaveTransition = (data, done) => {
     window.removeEventListener('keydown', keysHome)
   }
   if (data.current.namespace == 'galerie') {
-    window.removeEventListener('keydown', keysGalerie)
+    window.removeEventListener('keydown', keysGalerieOne)
+    window.removeEventListener('keydown', keysGalerieTwo)
   }
 
   let tl = gsap.timeline({

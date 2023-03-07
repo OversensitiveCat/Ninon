@@ -5,39 +5,50 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger, Observer)
 
 import { settingsOne, goLeftOne, goRightOne } from './slideOne'
+import { settingsTwo, goLeftTwo, goRightTwo } from './slideTwo'
 
-function keysGalerie(e) {
+function keysGalerieOne(e) {
   if (e.key == 'ArrowLeft') {
     goLeftOne()
   } else if (e.key == 'ArrowRight') {
     goRightOne()
   }
 }
+function keysGalerieTwo(e) {
+  if (e.key == 'ArrowLeft') {
+    goLeftTwo()
+  } else if (e.key == 'ArrowRight') {
+    goRightTwo()
+  }
+}
 
 const slidesGalerie = () => {
   // ALL
   settingsOne()
+  settingsTwo()
   window.addEventListener('resize', () => {
     settingsOne()
   })
   // Add Events
   const arrows = gsap.utils.toArray('.arrow-galerie')
+  const arrowsOverview = gsap.utils.toArray('.arrow-overview')
   arrows[0].addEventListener('click', goLeftOne)
   arrows[1].addEventListener('click', goRightOne)
-  window.addEventListener('keydown', keysGalerie)
-  let events
+  arrows[2].addEventListener('click', goLeftTwo)
+  arrows[3].addEventListener('click', goRightTwo)
+  arrowsOverview[0].addEventListener('click', goLeftTwo)
+  arrowsOverview[1].addEventListener('click', goRightTwo)
+  window.addEventListener('keydown', keysGalerieOne)
   ScrollTrigger.create({
     trigger: '.portraits .photos-wrapper',
     start: 'center top',
     onEnter: () => {
-      events = true
-      console.log(events)
-      window.removeEventListener('keydown', keysGalerie)
+      window.removeEventListener('keydown', keysGalerieOne)
+      window.addEventListener('keydown', keysGalerieTwo)
     },
     onLeaveBack: () => {
-      events = false
-      console.log(events)
-      window.addEventListener('keydown', keysGalerie)
+      window.removeEventListener('keydown', keysGalerieTwo)
+      window.addEventListener('keydown', keysGalerieOne)
     },
   })
 
@@ -51,7 +62,14 @@ const slidesGalerie = () => {
       onRight: () => goLeftOne(),
       onLeft: () => goRightOne(),
     })
+    Observer.create({
+      target: '.events .photos-container',
+      type: 'touch',
+      tolerance: 60,
+      onRight: () => goLeftTwo(),
+      onLeft: () => goRightTwo(),
+    })
   })
 }
 
-export { slidesGalerie, keysGalerie }
+export { slidesGalerie, keysGalerieOne, keysGalerieTwo }

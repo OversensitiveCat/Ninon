@@ -1,9 +1,5 @@
 import { gsap } from 'gsap'
-import { Observer } from 'gsap/Observer'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SplitType from 'split-type'
-
-gsap.registerPlugin(ScrollTrigger, Observer)
 
 const galerieOnce = () => {
   let down, up

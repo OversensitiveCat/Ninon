@@ -36,6 +36,11 @@
   "resolved" "https://registry.npmjs.org/@barba/prefetch/-/prefetch-2.1.10.tgz"
   "version" "2.1.10"
 
+"@barba/router@^2.1.10":
+  "integrity" "sha512-nGTeynbDaoOG97T5lCLslLKuw1qgSSaRwZE9/zRQDuvVoShS3MCf5ISDtXmQ2lPxQs3bjjNHD27mAeTd+2bMVQ=="
+  "resolved" "https://registry.npmjs.org/@barba/router/-/router-2.1.10.tgz"
+  "version" "2.1.10"
+
 "@eslint/eslintrc@^0.4.3":
   "integrity" "sha512-J6KFFz5QCYUJq3pf0mjEcCJVERbzv71PUIDczuh9JkwGEzced6CO5ADLHB1rbf/+oPBtoPfMYNOpGDzCANlbXw=="
   "resolved" "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-0.4.3.tgz"

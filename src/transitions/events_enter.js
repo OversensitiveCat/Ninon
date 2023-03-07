@@ -1,8 +1,10 @@
 import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import SplitType from 'split-type'
 
-const galerieEnter = () => {
-  let down, up
+gsap.registerPlugin(ScrollToPlugin)
+
+const eventsEnter = () => {
   let mm = gsap.matchMedia()
   mm.add(
     {
@@ -12,15 +14,13 @@ const galerieEnter = () => {
     (context) => {
       let { isDesktop, isNotDesktop } = context.conditions
       if (isDesktop) {
-        down = 30
-        up = 10
+        console.log('enter desktop')
       } else if (isNotDesktop) {
-        down = 20
-        up = 0
+        console.log('enter mobile')
       }
     }
   )
-  let letters = new SplitType('.heading1-galerie', {
+  let letters = new SplitType('.heading2-galerie', {
     types: 'chars',
     tagName: 'span',
   })
@@ -28,20 +28,14 @@ const galerieEnter = () => {
     types: 'chars',
     tagName: 'span',
   })
-  const photosItem = gsap.utils.toArray('.portraits .photos-item')
 
   let tl = gsap.timeline({ paused: true })
-  tl.from(
-    letters.chars,
-    {
-      autoAlpha: 0,
-      scale: 0.2,
-      yPercent: -20,
-      duration: 0.2,
-      stagger: { amount: 0.5 },
-    },
-    '+=0.8'
-  )
+  tl.from(letters.chars, {
+    autoAlpha: 0,
+    scale: 0.2,
+    duration: 0.2,
+    stagger: { amount: 0.5 },
+  })
     .from(
       '.nav-item',
       {
@@ -63,25 +57,18 @@ const galerieEnter = () => {
       },
       '<'
     )
+    .from('.photo-event-box', { opacity: 0, yPercent: 10, duration: 0.8 }, '<')
+    .from('.events .heading3-galerie', { opacity: 0, yPercent: 60 }, '-=0.6')
+    .from('.events .line-photo', { opacity: 0, yPercent: 60 }, '-=0.4')
+    .from('.events .photo-credit', { opacity: 0, yPercent: 60 }, '-=0.2')
+    .from('.overview-container', {
+      transformOrigin: 'center',
+      scale: 0.5,
+      opacity: 0,
+      duration: 1,
+    })
     .from(
-      '.portraits .heading2-galerie',
-      {
-        opacity: 0,
-        yPercent: -20,
-      },
-      '-=1.2'
-    )
-    .from(photosItem[0], { opacity: 0, yPercent: 20 }, '-=1')
-    .from(photosItem[2], { opacity: 0, yPercent: 20 }, '-=0.6')
-    .fromTo(
-      photosItem[1],
-      { opacity: 0, yPercent: down },
-      { opacity: 1, yPercent: up },
-      '-=0.8'
-    )
-    .from('.portraits .loading-line-box', { opacity: 0, yPercent: 500 }, '<')
-    .from(
-      '.portraits .nav-galerie',
+      '.events .nav-galerie',
       {
         opacity: 0,
         rotate: 360,
@@ -89,13 +76,13 @@ const galerieEnter = () => {
         xPercent: -50,
         duration: 0.7,
       },
-      '-=0.4'
+      '<'
     )
-    .from('.portraits .link-out.global', { opacity: 0, yPercent: 50 }, '-=0.4')
 
   // BASIC ENTER
   let enter = gsap.timeline({ onComplete: () => tl.play() })
   enter
+    .set(window, { scrollTo: '.events' })
     .fromTo(
       '.transition',
       { yPercent: 0 },
@@ -109,4 +96,4 @@ const galerieEnter = () => {
     .set('.transition', { zIndex: -20, yPercent: 100 })
 }
 
-export default galerieEnter
+export default eventsEnter

@@ -1,8 +1,10 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
+import barbaRouter from '@barba/router'
 
 import aaEnter from './transitions/archives-agenda_enter'
 import aaOnce from './transitions/archives-agenda_once'
+import eventsEnter from './transitions/events_enter'
 import galerieEnter from './transitions/galerie_enter'
 import galerieOnce from './transitions/galerie_once'
 import leaveTransition from './transitions/global/leave'
@@ -23,7 +25,17 @@ import setNavMob from './views/global/set_navMob'
 import home from './views/home'
 import { slideHome } from './views/slider-home'
 
+const myRoutes = [
+  {
+    path: '/archives',
+    name: 'archives',
+  },
+]
+
 barba.use(barbaPrefetch)
+barba.use(barbaRouter, {
+  routes: myRoutes,
+})
 
 barba.hooks.beforeEnter((data) => {
   mobileHeight(data)
@@ -80,6 +92,7 @@ barba.init({
     },
     {
       name: 'projects',
+      to: { namespace: ['programme', 'royaumont', 'durand', 'mdc'] },
       leave(data) {
         const done = this.async()
         leaveTransition(data, done)
@@ -92,22 +105,27 @@ barba.init({
       },
     },
     {
-      name: 'agenda',
-      to: { namespace: ['agenda'] },
+      name: 'photos-archives',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('custom-transition')
+          )
+        },
+        route: ['archives'],
+      },
+      to: { namespace: ['galerie'] },
       leave(data) {
         const done = this.async()
         leaveTransition(data, done)
       },
-      enter(data) {
-        aaEnter(data)
-      },
-      once(data) {
-        aaOnce(data)
+      enter() {
+        eventsEnter()
       },
     },
     {
-      name: 'archives',
-      to: { namespace: ['archives'] },
+      name: 'agenda-archives',
+      to: { namespace: ['agenda', 'archives'] },
       leave(data) {
         const done = this.async()
         leaveTransition(data, done)
