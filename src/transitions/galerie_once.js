@@ -92,7 +92,6 @@ const galerieOnce = () => {
       },
       '-=0.4'
     )
-    .from('.portraits .link-out.global', { opacity: 0, yPercent: 50 }, '-=0.4')
 
   window.addEventListener('load', () => tl.play())
 }

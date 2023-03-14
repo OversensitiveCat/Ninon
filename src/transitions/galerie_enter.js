@@ -91,7 +91,6 @@ const galerieEnter = () => {
       },
       '-=0.4'
     )
-    .from('.portraits .link-out.global', { opacity: 0, yPercent: 50 }, '-=0.4')
 
   // BASIC ENTER
   let enter = gsap.timeline({ onComplete: () => tl.play() })
