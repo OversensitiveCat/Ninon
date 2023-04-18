@@ -23,6 +23,7 @@ import setContact from './views/global/set_contact'
 import setLenis from './views/global/set_lenis'
 import setNavMob from './views/global/set_navMob'
 import home from './views/home'
+import lightbox from './views/lightbox'
 import { slideHome } from './views/slider-home'
 
 const myRoutes = [
@@ -60,6 +61,7 @@ barba.init({
       afterEnter() {
         home()
         slideHome()
+        lightbox()
       },
     },
     {
