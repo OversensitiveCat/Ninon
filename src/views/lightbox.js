@@ -38,6 +38,8 @@ const lightbox = () => {
       window.removeEventListener('click', leave)
       lenis.start()
       body.style.overflow = 'scroll'
+      let vid = lightbox.querySelector('#vid')
+      vid.src = ''
     },
   })
   tl.set(lightbox, { zIndex: 20 })
@@ -71,7 +73,7 @@ const lightbox = () => {
         vid = links.interview
     }
     let height = (9 * container.offsetWidth) / 16
-    let frame = `<iframe width="100%" height=${height} src=${vid} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+    let frame = `<iframe id="vid" width="100%" height=${height} src=${vid} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     container.innerHTML = frame
   }
 
