@@ -18,7 +18,7 @@ const home = () => {
     ecouter.addEventListener('click', () => {
       gsap.to(window, {
         scrollTo: '.section-ecouter',
-        duration: 3,
+        duration: 3.6,
         ease: 'power1.inOut',
       })
     })
@@ -231,6 +231,11 @@ const home = () => {
       gsap.set('.headings-wrapper, .numbers-wrapper', { yPercent: 0 })
     })
     mm.add('(max-width: 991px)', () => {
+      let vids = gsap.utils.toArray('.project-background')
+      vids.forEach((vid) => {
+        vid.muted = true
+        vid.play()
+      })
       // PROJECT SNAP
       const circles = gsap.utils.toArray('.circles-container-mob .circle')
       let per = 0,
