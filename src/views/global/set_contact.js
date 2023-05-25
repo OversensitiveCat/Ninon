@@ -203,7 +203,7 @@ const setContact = (data) => {
       link.addEventListener('mouseleave', () => tl.reverse())
     })
   }
-  return gsap.delayedCall(1, set)
+  return gsap.delayedCall(2.5, set)
 }
 
 export default setContact
