@@ -11,13 +11,14 @@ const aaOnce = (data) => {
     tagName: 'span',
   })
   let tl = gsap.timeline({ paused: true })
-  tl.from(letters.chars, {
-    autoAlpha: 0,
-    scale: 0.2,
-    yPercent: -20,
-    duration: 0.2,
-    stagger: { amount: 0.8 },
-  })
+  tl.to('.hide', { autoAlpha: 0, duration: 0.4 })
+    .from(letters.chars, {
+      autoAlpha: 0,
+      scale: 0.2,
+      yPercent: -20,
+      duration: 0.2,
+      stagger: { amount: 0.8 },
+    })
     .from(
       '.nav-item',
       {

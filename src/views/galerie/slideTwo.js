@@ -16,14 +16,14 @@ let percent,
 
 function init() {
   let mm = gsap.matchMedia()
-  percent = -600
+  percent = -700
   arrowLeftOff = -100
   arrowLeftOn = 0
-  arrowRightOff = -1300
-  arrowRightOn = -1400
+  arrowRightOff = -1600
+  arrowRightOn = -1700
   stopLeft = 0
-  stopRight = -1400
-  active = 6
+  stopRight = -1700
+  active = 7
 
   mm.add('(min-width: 992px)', () => {
     gsap.set('#arrow-left2, #arrow-right2', {

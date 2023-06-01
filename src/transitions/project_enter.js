@@ -56,6 +56,7 @@ const projectEnter = (container) => {
   // BASIC ENTER
   let enter = gsap.timeline({ onComplete: () => tl.play() })
   enter
+    .set('.hide', { autoAlpha: 0 })
     .fromTo(
       '.transition',
       { yPercent: 0 },

@@ -68,6 +68,7 @@ const eventsEnter = () => {
   let enter = gsap.timeline({ onComplete: () => tl.play() })
   enter
     .set(window, { scrollTo: '.events' })
+    .set('.hide', { autoAlpha: 0 })
     .fromTo(
       '.transition',
       { yPercent: 0 },
