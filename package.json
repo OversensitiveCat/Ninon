@@ -25,8 +25,9 @@
     "@barba/core": "^2.9.7",
     "@barba/prefetch": "^2.1.10",
     "@barba/router": "^2.1.10",
-    "@studio-freight/lenis": "^0.2.28",
+    "@studio-freight/lenis": "^1.0.22",
     "gsap": "file:gsap-bonus.tgz",
+    "imagesloaded": "^5.0.0",
     "split-type": "^0.3.3"
   }
 }

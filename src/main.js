@@ -1,79 +1,193 @@
 import barba from '@barba/core'
 import barbaPrefetch from '@barba/prefetch'
-import barbaRouter from '@barba/router'
 
-import aaEnter from './transitions/archives-agenda_enter'
-import aaOnce from './transitions/archives-agenda_once'
-import eventsEnter from './transitions/events_enter'
-import galerieEnter from './transitions/galerie_enter'
-import galerieOnce from './transitions/galerie_once'
-import leaveTransition from './transitions/global/leave'
-import homeEnter from './transitions/home_enter'
-import homeOnce from './transitions/home_once'
-import projectEnter from './transitions/project_enter'
-import projectOnce from './transitions/project_once'
-import agenda from './views/agenda'
-import { slidesGalerie } from './views/galerie/setSliders'
-import animations from './views/global/animations'
-import language from './views/global/lang'
-import mobileHeight from './views/global/mobileHeight'
-import nav from './views/global/nav'
-import navProjets from './views/global/nav_projets'
-import setContact from './views/global/set_contact'
-import setLenis from './views/global/set_lenis'
-import setNavMob from './views/global/set_navMob'
-import home from './views/home'
-import lightbox from './views/lightbox'
-import { slideHome } from './views/slider-home'
+import agendaEnter from './entries/agendaEnter'
+import archivesEnter from './entries/archivesEnter'
+import { eventsEnter } from './entries/eventsEnter'
+import galerieEnter from './entries/galerieEnter'
+import homeEnter from './entries/homeEnter'
+import mentionsEnter from './entries/mentionsEnter'
+import onceMob from './entries/onceMob'
+import projectEnter from './entries/projectEnter'
+import {
+  wordsFadeIn,
+  headingsFadeIn,
+  divsFadeIn,
+  linksOut,
+} from './global-views/animations'
+import { contact, contactClear } from './global-views/contact/contact'
+import footer from './global-views/footer/footer'
+import language from './global-views/language'
+import { setLenis } from './global-views/lenis'
+import {
+  navBackground,
+  navBackgroundClear,
+} from './global-views/nav/navBackground'
+import { navHover, navHoverAgenda } from './global-views/nav/navHover'
+import {
+  navMob,
+  navLeave,
+  navEnter,
+  navLeaveToGalerie,
+} from './global-views/navMob/navMob'
+import { galerie, galerieClear } from './pages-views/galerie/galerie'
+import { home, homeClear } from './pages-views/home/home'
+import mentions from './pages-views/mentions/mentions'
+import beforeAgenda from './transitions/beforeAgenda'
+import beforeEvents from './transitions/beforeEvents'
+import enter from './transitions/enter'
+import leave from './transitions/leave'
+import leaveToGalerie from './transitions/leaveToGalerie'
+import quickEnter from './transitions/quickEnter'
+// import { printMedia } from './utilities/dev'
 
-const myRoutes = [
-  {
-    path: '/archives',
-    name: 'archives',
-  },
-]
+// printMedia()
+setLenis()
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual'
+}
 barba.use(barbaPrefetch)
-barba.use(barbaRouter, {
-  routes: myRoutes,
-})
 
-barba.hooks.beforeEnter((data) => {
-  mobileHeight(data)
+barba.hooks.beforeEnter(() =>
   window.addEventListener('unload', () => window.scrollTo(0, 0))
-})
+)
 
-barba.hooks.afterEnter((data) => {
-  animations()
-  setLenis()
-  setNavMob(data)
-  setContact(data)
-  navProjets()
-  nav(data)
-  language(data)
-})
+barba.hooks.afterEnter((data) => contact(data))
+
+barba.hooks.beforeLeave(contactClear)
 
 barba.init({
   timeout: 4000,
+  preventRunning: true,
   views: [
     {
       namespace: 'home',
       afterEnter() {
         home()
-        slideHome()
-        lightbox()
+        headingsFadeIn()
+        divsFadeIn()
+        linksOut()
+        language()
+        navHover()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        homeClear()
       },
     },
     {
       namespace: 'agenda',
       afterEnter() {
-        agenda()
+        divsFadeIn()
+        navHoverAgenda()
+        navBackground()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
+      },
+    },
+    {
+      namespace: 'solo',
+      afterEnter() {
+        headingsFadeIn()
+        wordsFadeIn()
+        divsFadeIn()
+        linksOut()
+        navHover()
+        navBackground()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
+      },
+    },
+    {
+      namespace: 'royaumont',
+      afterEnter() {
+        wordsFadeIn()
+        divsFadeIn()
+        linksOut()
+        navHover()
+        navBackground()
+        navMob()
+        language()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
+      },
+    },
+    {
+      namespace: 'durand',
+      afterEnter() {
+        wordsFadeIn()
+        divsFadeIn()
+        linksOut()
+        navHover()
+        navBackground()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
+      },
+    },
+    {
+      namespace: 'mdc',
+      afterEnter() {
+        headingsFadeIn()
+        wordsFadeIn()
+        divsFadeIn()
+        linksOut()
+        navHover()
+        navBackground()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
+      },
+    },
+    {
+      namespace: 'archives',
+      afterEnter() {
+        headingsFadeIn()
+        divsFadeIn()
+        linksOut()
+        navHover()
+        navBackground()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        navBackgroundClear()
       },
     },
     {
       namespace: 'galerie',
       afterEnter() {
-        slidesGalerie()
+        galerie()
+        navHover()
+        navMob()
+        footer()
+      },
+      afterLeave() {
+        galerieClear()
+      },
+    },
+    {
+      namespace: 'mentions',
+      afterEnter() {
+        mentions()
+        navHover()
+        linksOut()
+        navMob()
+        footer()
       },
     },
   ],
@@ -83,60 +197,131 @@ barba.init({
       to: { namespace: ['home'] },
       leave(data) {
         const done = this.async()
-        leaveTransition(data, done)
+        leave(data, done)
       },
       enter() {
+        enter(homeEnter)
+      },
+      once(data) {
+        onceMob(data)
         homeEnter()
       },
-      once() {
-        homeOnce()
+    },
+    {
+      name: 'home-mob',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('nav-link-mobile')
+          )
+        },
+      },
+      to: { namespace: ['home'] },
+      leave(data) {
+        const done = this.async()
+        navLeave(data, done)
+      },
+      enter() {
+        navEnter(homeEnter)
       },
     },
     {
       name: 'projects',
-      to: { namespace: ['programme', 'royaumont', 'durand', 'mdc'] },
+      to: { namespace: ['solo', 'royaumont', 'durand', 'mdc'] },
       leave(data) {
         const done = this.async()
-        leaveTransition(data, done)
+        leave(data, done)
       },
-      enter({ next }) {
-        projectEnter(next.container)
+      enter() {
+        enter(projectEnter)
       },
-      once() {
-        projectOnce()
+      once(data) {
+        onceMob(data)
+        projectEnter()
       },
     },
     {
-      name: 'photos-archives',
+      name: 'projects-mob',
       from: {
         custom: ({ trigger }) => {
           return (
-            trigger.classList && trigger.classList.contains('custom-transition')
+            trigger.classList && trigger.classList.contains('nav-link-mobile')
           )
         },
-        route: ['archives'],
       },
-      to: { namespace: ['galerie'] },
+      to: { namespace: ['solo'] },
       leave(data) {
         const done = this.async()
-        leaveTransition(data, done)
+        navLeave(data, done)
       },
       enter() {
-        eventsEnter()
+        navEnter(projectEnter)
       },
     },
     {
-      name: 'agenda-archives',
-      to: { namespace: ['agenda', 'archives'] },
+      name: 'agenda',
+      to: { namespace: ['agenda'] },
       leave(data) {
         const done = this.async()
-        leaveTransition(data, done)
+        leave(data, done)
       },
-      enter(data) {
-        aaEnter(data)
+      enter() {
+        beforeAgenda(agendaEnter)
       },
       once(data) {
-        aaOnce(data)
+        onceMob(data)
+        agendaEnter()
+      },
+    },
+    {
+      name: 'agenda-mob',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('nav-link-mobile')
+          )
+        },
+      },
+      to: { namespace: ['agenda'] },
+      leave(data) {
+        const done = this.async()
+        navLeave(data, done)
+      },
+      enter() {
+        navEnter(agendaEnter)
+      },
+    },
+    {
+      name: 'archives',
+      to: { namespace: ['archives'] },
+      leave(data) {
+        const done = this.async()
+        leave(data, done)
+      },
+      enter() {
+        enter(archivesEnter)
+      },
+      once(data) {
+        onceMob(data)
+        archivesEnter()
+      },
+    },
+    {
+      name: 'archives-mob',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('nav-link-mobile')
+          )
+        },
+      },
+      to: { namespace: ['archives'] },
+      leave(data) {
+        const done = this.async()
+        navLeave(data, done)
+      },
+      enter() {
+        navEnter(archivesEnter)
       },
     },
     {
@@ -144,13 +329,156 @@ barba.init({
       to: { namespace: ['galerie'] },
       leave(data) {
         const done = this.async()
-        leaveTransition(data, done)
+        leaveToGalerie(data, done)
       },
       enter() {
+        quickEnter(galerieEnter)
+      },
+      once(data) {
+        onceMob(data)
         galerieEnter()
       },
-      once() {
-        galerieOnce()
+    },
+    {
+      name: 'galerie-mob',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('nav-link-mobile')
+          )
+        },
+      },
+      to: { namespace: ['galerie'] },
+      leave(data) {
+        const done = this.async()
+        navLeaveToGalerie(data, done)
+      },
+      enter() {
+        navEnter(galerieEnter)
+      },
+    },
+    {
+      name: 'galerie-events',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList && trigger.classList.contains('link-to-galerie')
+          )
+        },
+      },
+      to: { namespace: ['galerie'] },
+      leave(data) {
+        const done = this.async()
+        leaveToGalerie(data, done)
+      },
+      enter() {
+        beforeEvents(eventsEnter)
+      },
+    },
+    {
+      name: 'mentions',
+      to: { namespace: ['mentions'] },
+      leave(data) {
+        const done = this.async()
+        leave(data, done)
+      },
+      enter() {
+        quickEnter(mentionsEnter)
+      },
+      once(data) {
+        onceMob(data)
+        mentionsEnter()
+      },
+    },
+    {
+      name: 'mentions-mob',
+      from: {
+        custom: ({ trigger }) => {
+          return (
+            trigger.classList &&
+            trigger.classList.contains('nav-mobile-mentions')
+          )
+        },
+      },
+      to: { namespace: ['mentions'] },
+      leave(data) {
+        const done = this.async()
+        navLeave(data, done)
+      },
+      enter() {
+        navEnter(mentionsEnter)
+      },
+    },
+    {
+      name: 'self',
+      leave(data) {
+        if (
+          data.trigger.classList.contains('nav-link-mobile') ||
+          data.trigger.classList.contains('nav-mobile-mentions')
+        ) {
+          const done = this.async()
+          navLeave(data, done)
+        } else {
+          const done = this.async()
+          leave(data, done)
+        }
+      },
+      enter(data) {
+        if (
+          data.trigger.classList.contains('nav-link-mobile') ||
+          data.trigger.classList.contains('nav-mobile-mentions')
+        ) {
+          switch (data.current.namespace) {
+            case 'home':
+              navEnter(homeEnter)
+              break
+            case 'solo':
+              navEnter(projectEnter)
+              break
+            case 'agenda':
+              navEnter(agendaEnter)
+              break
+            case 'archives':
+              navEnter(archivesEnter)
+              break
+            case 'galerie':
+              navEnter(galerieEnter)
+              break
+            case 'mentions':
+              navEnter(mentionsEnter)
+              break
+          }
+        } else {
+          switch (data.current.namespace) {
+            case 'home':
+              enter(homeEnter)
+              break
+            case 'solo':
+              enter(projectEnter)
+              break
+            case 'royaumont':
+              enter(projectEnter)
+              break
+            case 'durand':
+              enter(projectEnter)
+              break
+            case 'mdc':
+              enter(projectEnter)
+              break
+            case 'agenda':
+              beforeAgenda(agendaEnter)
+              break
+            case 'archives':
+              enter(archivesEnter)
+              break
+            case 'galerie':
+              enter(galerieEnter)
+              break
+            case 'mentions':
+              quickEnter(mentionsEnter)
+              break
+          }
+        }
       },
     },
   ],
