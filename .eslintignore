@@ -6,5 +6,9 @@ dist
 coverage
 
 example
+galerieEnter.js
+homeEnter.js
+contact.js
+navMob.js
 vite.config.js
 README.md
