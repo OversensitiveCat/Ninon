@@ -1,9 +1,9 @@
 import { gsap } from 'gsap'
-import imagesLoaded from 'imagesloaded'
 
 import { lenis } from '../global-views/lenis'
+import { vidsLoaded } from '../utilities/loading'
 
-const leaveToGalerie = (data, done) => {
+const leaveVids = (data, done) => {
   lenis.stop()
   let tl = gsap.timeline()
   tl.set('.transition', { zIndex: 200 }).fromTo(
@@ -17,13 +17,15 @@ const leaveToGalerie = (data, done) => {
   )
 
   tl.then(() => {
-    let imgLoad = imagesLoaded(data.next.container)
-    imgLoad.on('done', function () {
+    vidsLoaded(function () {
       data.current.container.remove()
+      let vid = data.next.container.querySelector('.section-hero video')
+      vid.muted = true
+      vid.play()
       window.scrollTo(0, 0)
       done()
     })
   })
 }
 
-export default leaveToGalerie
+export default leaveVids

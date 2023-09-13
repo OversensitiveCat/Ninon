@@ -72,7 +72,7 @@ const homeEnter = () => {
 
   // Init
   if (touchDevice()) {
-    gsap.set(section, { height: window.innerHeight, opacity: 1 })
+    gsap.set(section, { opacity: 1 })
     tl.play()
   } else {
     gsap.set(section, { opacity: 1 })

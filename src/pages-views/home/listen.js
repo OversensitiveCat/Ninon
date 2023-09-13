@@ -180,7 +180,7 @@ const listen = () => {
   arrows[1].addEventListener('click', goRight)
   window.addEventListener('resize', handleResize)
 
-  if (!touchDevice()) {
+  if (touchDevice()) {
     Observer.create({
       target: '.vids-wrapper',
       type: 'touch',

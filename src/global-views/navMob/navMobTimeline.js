@@ -27,10 +27,10 @@ const navMobTimeline = () => {
       {
         autoAlpha: 0,
         duration: 0.5,
-        stagger: 0.2,
+        stagger: 0.25,
         yPercent: 60,
       },
-      '-=0.3'
+      '-=0.2'
     )
     .from(
       '.nav-mobile-contact',

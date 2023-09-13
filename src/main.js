@@ -19,6 +19,7 @@ import { contact, contactClear } from './global-views/contact/contact'
 import footer from './global-views/footer/footer'
 import language from './global-views/language'
 import { setLenis } from './global-views/lenis'
+import mobHeight from './global-views/mobHeight'
 import {
   navBackground,
   navBackgroundClear,
@@ -28,7 +29,7 @@ import {
   navMob,
   navLeave,
   navEnter,
-  navLeaveToGalerie,
+  navLeaveVid,
 } from './global-views/navMob/navMob'
 import { galerie, galerieClear } from './pages-views/galerie/galerie'
 import { home, homeClear } from './pages-views/home/home'
@@ -37,21 +38,21 @@ import beforeAgenda from './transitions/beforeAgenda'
 import beforeEvents from './transitions/beforeEvents'
 import enter from './transitions/enter'
 import leave from './transitions/leave'
-import leaveToGalerie from './transitions/leaveToGalerie'
+import leaveVids from './transitions/leaveVids'
 import quickEnter from './transitions/quickEnter'
-// import { printMedia } from './utilities/dev'
+import { domLoaded } from './utilities/loading'
 
-// printMedia()
 setLenis()
+window.addEventListener('unload', () => window.scrollTo(0, 0))
 
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual'
 }
 barba.use(barbaPrefetch)
 
-barba.hooks.beforeEnter(() =>
-  window.addEventListener('unload', () => window.scrollTo(0, 0))
-)
+// barba.hooks.beforeEnter(() => {
+//   imgsLoadedUs()
+// })
 
 barba.hooks.afterEnter((data) => contact(data))
 
@@ -60,11 +61,15 @@ barba.hooks.beforeLeave(contactClear)
 barba.init({
   timeout: 4000,
   preventRunning: true,
+  debug: true,
   views: [
     {
       namespace: 'home',
-      afterEnter() {
-        home()
+      beforeEnter() {
+        mobHeight('.section-hero-home')
+      },
+      afterEnter(data) {
+        home(data)
         headingsFadeIn()
         divsFadeIn()
         linksOut()
@@ -79,6 +84,9 @@ barba.init({
     },
     {
       namespace: 'agenda',
+      beforeEnter() {
+        mobHeight('.section-hero-agenda')
+      },
       afterEnter() {
         divsFadeIn()
         navHoverAgenda()
@@ -92,6 +100,9 @@ barba.init({
     },
     {
       namespace: 'solo',
+      beforeEnter() {
+        mobHeight('.section-hero')
+      },
       afterEnter() {
         headingsFadeIn()
         wordsFadeIn()
@@ -108,6 +119,9 @@ barba.init({
     },
     {
       namespace: 'royaumont',
+      beforeEnter() {
+        mobHeight('.section-hero')
+      },
       afterEnter() {
         wordsFadeIn()
         divsFadeIn()
@@ -124,6 +138,9 @@ barba.init({
     },
     {
       namespace: 'durand',
+      beforeEnter() {
+        mobHeight('.section-hero')
+      },
       afterEnter() {
         wordsFadeIn()
         divsFadeIn()
@@ -139,6 +156,9 @@ barba.init({
     },
     {
       namespace: 'mdc',
+      beforeEnter() {
+        mobHeight('.section-hero')
+      },
       afterEnter() {
         headingsFadeIn()
         wordsFadeIn()
@@ -155,6 +175,9 @@ barba.init({
     },
     {
       namespace: 'archives',
+      beforeEnter() {
+        mobHeight('.section-hero-archives')
+      },
       afterEnter() {
         headingsFadeIn()
         divsFadeIn()
@@ -203,8 +226,10 @@ barba.init({
         enter(homeEnter)
       },
       once(data) {
-        onceMob(data)
-        homeEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(homeEnter)
       },
     },
     {
@@ -230,14 +255,16 @@ barba.init({
       to: { namespace: ['solo', 'royaumont', 'durand', 'mdc'] },
       leave(data) {
         const done = this.async()
-        leave(data, done)
+        leaveVids(data, done)
       },
       enter() {
         enter(projectEnter)
       },
       once(data) {
-        onceMob(data)
-        projectEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(projectEnter)
       },
     },
     {
@@ -252,7 +279,7 @@ barba.init({
       to: { namespace: ['solo'] },
       leave(data) {
         const done = this.async()
-        navLeave(data, done)
+        navLeaveVid(data, done)
       },
       enter() {
         navEnter(projectEnter)
@@ -269,8 +296,10 @@ barba.init({
         beforeAgenda(agendaEnter)
       },
       once(data) {
-        onceMob(data)
-        agendaEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(agendaEnter)
       },
     },
     {
@@ -296,14 +325,16 @@ barba.init({
       to: { namespace: ['archives'] },
       leave(data) {
         const done = this.async()
-        leave(data, done)
+        leaveVids(data, done)
       },
       enter() {
         enter(archivesEnter)
       },
       once(data) {
-        onceMob(data)
-        archivesEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(archivesEnter)
       },
     },
     {
@@ -318,7 +349,7 @@ barba.init({
       to: { namespace: ['archives'] },
       leave(data) {
         const done = this.async()
-        navLeave(data, done)
+        navLeaveVid(data, done)
       },
       enter() {
         navEnter(archivesEnter)
@@ -329,14 +360,16 @@ barba.init({
       to: { namespace: ['galerie'] },
       leave(data) {
         const done = this.async()
-        leaveToGalerie(data, done)
+        leave(data, done)
       },
       enter() {
         quickEnter(galerieEnter)
       },
       once(data) {
-        onceMob(data)
-        galerieEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(galerieEnter)
       },
     },
     {
@@ -351,7 +384,7 @@ barba.init({
       to: { namespace: ['galerie'] },
       leave(data) {
         const done = this.async()
-        navLeaveToGalerie(data, done)
+        navLeave(data, done)
       },
       enter() {
         navEnter(galerieEnter)
@@ -369,7 +402,7 @@ barba.init({
       to: { namespace: ['galerie'] },
       leave(data) {
         const done = this.async()
-        leaveToGalerie(data, done)
+        leave(data, done)
       },
       enter() {
         beforeEvents(eventsEnter)
@@ -386,8 +419,10 @@ barba.init({
         quickEnter(mentionsEnter)
       },
       once(data) {
-        onceMob(data)
-        mentionsEnter()
+        domLoaded(function () {
+          onceMob(data)
+        })
+        domLoaded(mentionsEnter)
       },
     },
     {

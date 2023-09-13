@@ -1,6 +1,7 @@
 import { gsap } from 'gsap'
 
 import { lenis } from '../global-views/lenis'
+import { imgsLoaded } from '../utilities/loading'
 
 const leave = (data, done) => {
   lenis.stop()
@@ -16,14 +17,11 @@ const leave = (data, done) => {
   )
 
   tl.then(() => {
-    data.current.container.remove()
-    window.scrollTo(0, 0)
-    done()
-    let video = data.next.container.querySelector('.section-hero video')
-    if (video) {
-      video.muted = true
-      video.play()
-    }
+    imgsLoaded(data.next.container, function () {
+      data.current.container.remove()
+      window.scrollTo(0, 0)
+      done()
+    })
   })
 }
 

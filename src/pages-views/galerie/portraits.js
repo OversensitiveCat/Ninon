@@ -68,12 +68,18 @@ function initData() {
   loadingPercent = loading
 
   if (windowWidth >= 992) {
+    toogleStroke(arrowLeft, red)
+
     min = width
     nbr -= 2
   } else if (windowWidth >= 768) {
+    toogleStroke(arrowLeft, grey)
+
     min = 0
     nbr -= 2
   } else {
+    toogleStroke(arrowLeft, grey)
+
     min = 0
     nbr -= 1
   }
@@ -83,7 +89,6 @@ function initData() {
   // Set arrows
   gsap.set(list, { height: 'auto' })
   gsap.set(list, { height: list.offsetHeight })
-  toogleStroke(arrowLeft, red)
   toogleStroke(arrowRight, red)
 }
 

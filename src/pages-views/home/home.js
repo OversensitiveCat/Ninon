@@ -9,16 +9,19 @@ import {
 import homeProjectsMobile from './homeProjectsMobile'
 import { lightbox, lightboxClear } from './lightbox'
 import { listen, listenClear } from './listen'
+import { vidsLoaded } from '../../utilities/loading'
 
-const home = () => {
+const home = (data) => {
   homeButtons()
   listen()
   lightbox()
 
-  gsap.utils.toArray('video').forEach((video) => {
-    video.muted = true
-    video.play()
-  })
+  vidsLoaded(function () {
+    gsap.utils.toArray('video').forEach((video) => {
+      video.muted = true
+      video.play()
+    })
+  }, data.next.container)
 
   let mm = gsap.matchMedia()
   mm.add(

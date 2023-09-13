@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import SplitType from 'split-type'
 
-import { isDesktop, touchDevice } from '../utilities/utilities'
+import { isDesktop } from '../utilities/utilities'
 
 const agendaEnter = () => {
   let letters = new SplitType('h1', {
@@ -56,10 +56,6 @@ const agendaEnter = () => {
     })
 
     gsap.to('.ham-line', { backgroundColor: '#b40000' })
-  }
-
-  if (touchDevice()) {
-    gsap.set('.section-hero-agenda', { height: window.innerHeight })
   }
 
   gsap.set('[data-anim="hero"', { opacity: 1 })

@@ -3,6 +3,7 @@ import imagesLoaded from 'imagesloaded'
 
 import { lenis } from '../lenis'
 import navMobTimeline from './navMobTimeline'
+import { vidsLoaded } from '../../utilities/loading'
 
 const tl = navMobTimeline()
 
@@ -44,17 +45,6 @@ const navMob = () => {
 }
 
 const navLeave = (data, done) => {
-  data.current.container.remove()
-  window.scrollTo(0, 0)
-  let video = document.querySelector('.section-hero video')
-  if (video) {
-    video.muted = true
-    video.play()
-  }
-  done()
-}
-
-const navLeaveToGalerie = (data, done) => {
   let imgLoad = imagesLoaded(data.next.container)
   imgLoad.on('done', function () {
     data.current.container.remove()
@@ -63,6 +53,18 @@ const navLeaveToGalerie = (data, done) => {
   })
 }
 
+const navLeaveVid = (data, done) => {
+  vidsLoaded(function () {
+    data.current.container.remove()
+    window.scrollTo(0, 0)      
+    let vid = data.next.container.querySelector('.section-hero video')
+    vid.muted = true
+    vid.play()
+    done()
+  }, data.next.container)
+}
+
+
 const navEnter = (pageEnter) => {
   return tl.reverse().then(() => {
     lenis.start()
@@ -70,4 +72,4 @@ const navEnter = (pageEnter) => {
   })
 }
 
-export { navMob, navLeave, navLeaveToGalerie, navEnter }
+export { navMob, navLeave, navLeaveVid, navEnter }
