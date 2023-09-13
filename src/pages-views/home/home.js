@@ -16,13 +16,6 @@ const home = (data) => {
   listen()
   lightbox()
 
-  vidsLoaded(function () {
-    gsap.utils.toArray('video').forEach((video) => {
-      video.muted = true
-      video.play()
-    })
-  }, data.next.container)
-
   let mm = gsap.matchMedia()
   mm.add(
     {
@@ -32,13 +25,24 @@ const home = (data) => {
     (context) => {
       let { isDesktop, isMobile } = context.conditions
 
+      let videos
+
       if (isDesktop) {
         homeProjectsDesktop()
+        videos = gsap.utils.toArray('.section-projets video')
       } else if (isMobile) {
+        videos = gsap.utils.toArray('.section-projets-mob video')
         homeProjectsDesktopClear()
         homeProjectsMobile()
         hamHome()
       }
+
+      vidsLoaded(function () {
+        videos.forEach((video) => {
+          video.muted = true
+          video.play()
+        })
+      }, data.next.container)
     }
   )
 }

@@ -61,7 +61,6 @@ barba.hooks.beforeLeave(contactClear)
 barba.init({
   timeout: 4000,
   preventRunning: true,
-  debug: true,
   views: [
     {
       namespace: 'home',
