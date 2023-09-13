@@ -1,6 +1,7 @@
 import { gsap } from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SplitType from 'split-type'
 
 import { touchDevice } from '../utilities/utilities'
 import aboutEnter from './aboutEnter'
@@ -9,12 +10,13 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 const homeEnter = () => {
   const section = document.querySelector('[data-anim="hero"]')
-  const letters = gsap.utils.toArray(
-    '.section-hero-home .cls-1, .section-hero-home .cls-3'
-  )
+  const letters = new SplitType('.home-hero-heading', {
+    types: 'chars',
+    absolute: true,
+  })
 
   let tl = gsap.timeline({ paused: true })
-  tl.from(letters, {
+  tl.from(letters.chars, {
     opacity: 0,
     duration: 0.2,
     stagger: { amount: 1.2 },
@@ -71,13 +73,12 @@ const homeEnter = () => {
   })
 
   // Init
-  if (touchDevice()) {
-    gsap.set(section, { opacity: 1 })
-    tl.play()
-  } else {
-    gsap.set(section, { opacity: 1 })
-    tl.play().then(scroll)
+  if (!touchDevice()) {
+    tl.eventCallback('onComplete', scroll)
   }
+
+  gsap.set(section, { opacity: 1 })
+  tl.play()
 }
 
 export default homeEnter

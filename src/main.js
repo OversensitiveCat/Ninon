@@ -50,10 +50,6 @@ if ('scrollRestoration' in history) {
 }
 barba.use(barbaPrefetch)
 
-// barba.hooks.beforeEnter(() => {
-//   imgsLoadedUs()
-// })
-
 barba.hooks.afterEnter((data) => contact(data))
 
 barba.hooks.beforeLeave(contactClear)
