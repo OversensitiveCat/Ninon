@@ -7,29 +7,62 @@ import { touchDevice } from '../utilities/utilities'
 gsap.registerPlugin(ScrollTrigger)
 
 const wordsFadeIn = () => {
-  const words = new SplitType('[data-anim="words"]', {
-    types: 'words',
-    tagName: 'span',
-  })
-  words.words.forEach((word) => {
-    let tl = gsap.timeline({ paused: true })
-    tl.from(word, {
-      autoAlpha: 0,
-      rotateX: 30,
-      yPercent: 20,
-      duration: 1,
-    })
-    ScrollTrigger.create({
-      trigger: word,
-      start: 'top 80%',
-      onEnter: () => tl.play(),
-    })
-    ScrollTrigger.create({
-      trigger: word,
-      start: '-20% bottom',
-      onLeaveBack: () => tl.pause(0),
-    })
-  })
+  let mm = gsap.matchMedia()
+  mm.add(
+    {
+      isDesktop: '(min-width: 992px)',
+      isMobile: '(max-width: 991px)',
+    },
+    (context) => {
+      // eslint-disable-next-line no-unused-vars
+      let { isDesktop, isMobile } = context.conditions
+      const paras = gsap.utils.toArray('[data-anim="words"]')
+      if (isDesktop) {
+        const words = new SplitType(paras, {
+          types: 'words',
+          tagName: 'span',
+        })
+        words.words.forEach((word) => {
+          let tl = gsap.timeline({ paused: true })
+          tl.from(word, {
+            opacity: 0,
+            rotateX: 30,
+            yPercent: 20,
+            duration: 1,
+          })
+          ScrollTrigger.create({
+            trigger: word,
+            start: 'top 80%',
+            onEnter: () => tl.play(),
+          })
+          ScrollTrigger.create({
+            trigger: word,
+            start: '-20% bottom',
+            onLeaveBack: () => tl.pause(0),
+          })
+        })
+      } else if (isMobile) {
+        paras.forEach((para) => {
+          let tl = gsap.timeline({ paused: true })
+          tl.from(para, {
+            opacity: 0,
+            yPercent: 10,
+            duration: 0.8,
+          })
+          ScrollTrigger.create({
+            trigger: para,
+            start: 'top 85%',
+            onEnter: () => tl.play(),
+          })
+          ScrollTrigger.create({
+            trigger: para,
+            start: '-10% bottom',
+            onLeaveBack: () => tl.pause(0),
+          })
+        })
+      }
+    }
+  )
 }
 
 const linksOut = () => {

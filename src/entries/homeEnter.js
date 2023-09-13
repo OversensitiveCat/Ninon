@@ -15,16 +15,16 @@ const homeEnter = () => {
 
   let tl = gsap.timeline({ paused: true })
   tl.from(letters, {
-    autoAlpha: 0,
+    opacity: 0,
     duration: 0.2,
-    stagger: { amount: 1 },
+    stagger: { amount: 1.2 },
     scale: 0.2,
     yPercent: -20,
   })
     .from(
       '.image-accueil',
-      { autoAlpha: 0, yPercent: 70, duration: 1, scale: 0.9 },
-      '+=0.2'
+      { opacity: 0, yPercent: 70, duration: 1, scale: 0.9 },
+      '+=0.3'
     )
     .from(
       '.accueil-subheading',
@@ -32,7 +32,7 @@ const homeEnter = () => {
         duration: 0.6,
         stagger: 0.4,
         rotateX: 50,
-        autoAlpha: 0,
+        opacity: 0,
         yPercent: 30,
       },
       '<'
