@@ -1,4 +1,7 @@
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const mentions = () => {
   // Mentions
@@ -34,9 +37,9 @@ const mentions = () => {
 
     function toogle() {
       if (tl.progress() === 0) {
-        tl.play()
+        tl.play().then(() => ScrollTrigger.refresh())
       } else if (tl.progress() === 1) {
-        tl.reverse()
+        tl.reverse().then(() => ScrollTrigger.refresh())
       }
     }
     head.addEventListener('click', toogle)

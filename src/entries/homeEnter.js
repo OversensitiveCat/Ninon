@@ -19,14 +19,14 @@ const homeEnter = () => {
   tl.from(letters.chars, {
     opacity: 0,
     duration: 0.2,
-    stagger: { amount: 1.2 },
+    stagger: { amount: 1.3 },
     scale: 0.2,
     yPercent: -20,
   })
     .from(
       '.image-accueil',
-      { opacity: 0, yPercent: 70, duration: 1, scale: 0.9 },
-      '+=0.3'
+      { opacity: 0, yPercent: 70, duration: 1.2, scale: 0.9 },
+      '+=0.35'
     )
     .from(
       '.accueil-subheading',
@@ -55,6 +55,7 @@ const homeEnter = () => {
         scrollTo: section.getBoundingClientRect().bottom,
         duration: 1,
         ease: 'power1.inOut',
+        delay: 0.25
       })
     }
   }

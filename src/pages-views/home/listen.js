@@ -18,13 +18,13 @@ let percent
 let windowWidth
 let width
 let max
+let min
 let nbr
 let loading
 let loadingPercent
 
 let active = false
 
-const min = 0
 const d = 0.8
 const red = '#b40000'
 const grey = '#201f1f'
@@ -58,9 +58,18 @@ function initData() {
   windowWidth = window.innerWidth
   current = 1
   percent = 0
-  loadingPercent = 0
   width = findWidth(windowWidth)
   nbr = items.length
+
+  if (windowWidth >= 992) {
+    min = width
+    loadingPercent = width
+    toogleStroke(arrowLeft, red)
+  } else {
+    min = 0
+    loadingPercent = 0
+    toogleStroke(arrowLeft, grey)
+  }
 
   if (windowWidth >= 768) {
     nbr -= 2
@@ -69,10 +78,9 @@ function initData() {
   }
 
   max = -width * nbr
-  loading = Math.ceil(100 / nbr)
+  loading = width
 
   // Set arrows
-  toogleStroke(arrowLeft, grey)
   toogleStroke(arrowRight, red)
 }
 
