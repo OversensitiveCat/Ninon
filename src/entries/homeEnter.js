@@ -53,7 +53,7 @@ const homeEnter = () => {
     if (hero === true) {
       gsap.to(window, {
         scrollTo: section.getBoundingClientRect().bottom,
-        duration: 1,
+        duration: 1.25,
         ease: 'power1.inOut',
         delay: 0.25
       })

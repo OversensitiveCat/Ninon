@@ -16,6 +16,7 @@ import {
   linksOut,
 } from './global-views/animations'
 import { contact, contactClear } from './global-views/contact/contact'
+import cursor from './global-views/cursor'
 import footer from './global-views/footer/footer'
 import language from './global-views/language'
 import { setLenis } from './global-views/lenis'
@@ -43,6 +44,7 @@ import quickEnter from './transitions/quickEnter'
 import { domLoaded } from './utilities/loading'
 
 setLenis()
+cursor()
 window.addEventListener('unload', () => window.scrollTo(0, 0))
 
 if ('scrollRestoration' in history) {
