@@ -19,7 +19,7 @@ const cursor = () => {
     yTo(e.clientY)
   })
   domLoaded(function () {
-    gsap.to(cursor, { opacity: 1 })
+    gsap.to('.cursor', { opacity: 1 })
   })
 }
 
