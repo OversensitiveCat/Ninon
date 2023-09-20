@@ -84,7 +84,7 @@ const footerFadeIn = () => {
 
       ScrollTrigger.create({
         trigger: '.main',
-        start: 'bottom 90%',
+        start: 'bottom 85%',
         onEnter: () => tl.play(),
       })
       ScrollTrigger.create({

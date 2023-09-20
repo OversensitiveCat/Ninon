@@ -1,6 +1,7 @@
 import { gsap } from 'gsap'
 
 import { lenis } from '../../global-views/lenis'
+import loadIframe from '../../global-views/loadIframe'
 
 let keys
 
@@ -8,22 +9,28 @@ const lightbox = () => {
   // DOM
   const body = document.querySelector('body')
   const items = gsap.utils.toArray('.vid-item')
-  const vids = gsap.utils.toArray('.vid-lightbox')
   const lightbox = document.querySelector('.lightbox')
   const closeButton = document.querySelector('.close-lightbox')
   const lineOne = document.querySelector('.close1')
   const lineTwo = document.querySelector('.close2')
+  const vid = document.querySelector('.lightbox iframe')
+  const errorMessage = document.querySelector('.lightbox .lightbox-error')
 
-  let current
-  let currentSrc
+  const links = items.map((i) => {
+    return i.getAttribute('vid-link')
+  })
 
-  // Function
+  gsap.set(vid, { opacity: 0 })
 
-  function display(i) {
-    current = vids[i].querySelector('iframe')
+  // Promise resolutions
+  function isLoaded() {
+    console.log('the loading has succeeded')
+  }
 
-    gsap.set(vids[i], { display: 'block', opacity: 0 })
-    gsap.to(vids[i], { opacity: 1 })
+  function error() {
+    console.log('the loading has failed')
+    gsap.set('.iframe-container', { display: 'none' })
+    gsap.set(errorMessage, { display: 'block' })
   }
 
   // Timeline
@@ -34,26 +41,25 @@ const lightbox = () => {
     .from(closeButton, { opacity: 0 }, '<')
     .to(lineOne, { rotate: 45 })
     .to(lineTwo, { rotate: -45 }, '<')
+    .to(vid, { opacity: 1 })
+    .to('.cursor', { opacity: 0 }, '<')
 
   const openLightbox = (item) => {
     if (tl.isActive()) return
 
-    body.style.overflow = 'hidden'
+    body.style.overflowY = 'hidden'
+    vid.src = links[items.indexOf(item)]
     lenis.stop()
     tl.play()
-    tl.then(() => display(items.indexOf(item)))
+    loadIframe(vid, isLoaded, error)
   }
 
   const closeLightbox = () => {
     if (tl.isActive()) return
 
-    currentSrc = current.src
-
     tl.reverse().then(() => {
-      current.src = ''
-      current.src = currentSrc
-      gsap.set(vids, { display: 'none' })
-      body.style.overflow = 'scroll'
+      vid.src = ''
+      body.style.overflowY = 'scroll'
       lenis.start()
     })
   }
@@ -70,6 +76,8 @@ const lightbox = () => {
     gsap.to(lineOne, { rotate: 45 })
     gsap.to(lineTwo, { rotate: -45 })
   })
+
+  lightbox.addEventListener('click', closeLightbox)
 
   keys = (e) => {
     if (e.key == 'Escape') {
