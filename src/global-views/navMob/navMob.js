@@ -45,9 +45,12 @@ const navMob = () => {
 }
 
 const navLeave = (data, done) => {
-  data.current.container.remove()
-  window.scrollTo(0, 0)
-  done()
+  let imgLoad = imagesLoaded(data.next.container)
+  imgLoad.on('always', function () {
+    data.current.container.remove()
+    window.scrollTo(0, 0)
+    done()
+  })
 }
 
 const navLeaveVid = (data, done) => {
