@@ -44,35 +44,6 @@ const contactTimeline = () => {
       },
       '<'
     )
-    .from(
-      '.agence-grid > .link-out, .credits-grid > .contact-subheading',
-      {
-        autoAlpha: 0,
-        yPercent: -60,
-        duration: 0.4,
-      },
-      '>-=0.4'
-    )
-    .from(
-      '#agent1 > *',
-      {
-        autoAlpha: 0,
-        yPercent: 40,
-        duration: 0.4,
-        stagger: { amount: 0.5 },
-      },
-      '<'
-    )
-    .from(
-      '#agent2 > *',
-      {
-        autoAlpha: 0,
-        yPercent: 40,
-        duration: 0.4,
-        stagger: { amount: 0.5 },
-      },
-      '<'
-    )
     .to('.line-close1', { rotate: 45 }, '<')
     .to('.line-close2', { rotate: -45 }, '<')
 

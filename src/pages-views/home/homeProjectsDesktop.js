@@ -18,7 +18,7 @@ const homeProjectsDesktop = () => {
     scrollTrigger: {
       trigger: section,
       start: 'top top',
-      end: '20% top',
+      end: '25% top',
       scrub: true,
     },
     scale: 0,
@@ -26,8 +26,8 @@ const homeProjectsDesktop = () => {
   gsap.from(vids[1], {
     scrollTrigger: {
       trigger: section,
-      start: '20% top',
-      end: '40% top',
+      start: '25% top',
+      end: '50% top',
       scrub: true,
     },
     scale: 0,
@@ -35,31 +35,21 @@ const homeProjectsDesktop = () => {
   gsap.from(vids[2], {
     scrollTrigger: {
       trigger: section,
-      start: '40% top',
-      end: '60% top',
-      scrub: true,
-    },
-    scale: 0,
-  })
-  gsap.from(vids[3], {
-    scrollTrigger: {
-      trigger: section,
-      start: '60% top',
-      end: '80% top',
+      start: '50% top',
+      end: '75% top',
       scrub: true,
     },
     scale: 0,
   })
 
   // Nav circles
-  let sectionHeight, distance, projetUn, projetDeux, projetTrois, projetQuatre
+  let sectionHeight, distance, projetUn, projetDeux, projetTrois
   function getPosition() {
     sectionHeight = section.clientHeight
     distance = section.getBoundingClientRect().top + window.scrollY
-    projetUn = distance + (sectionHeight / 100) * 20
-    projetDeux = distance + (sectionHeight / 100) * 40
-    projetTrois = distance + (sectionHeight / 100) * 60
-    projetQuatre = distance + (sectionHeight / 100) * 80
+    projetUn = distance + (sectionHeight / 100) * 25
+    projetDeux = distance + (sectionHeight / 100) * 50
+    projetTrois = distance + (sectionHeight / 100) * 75
   }
   getPosition()
   handleResize = debounce(getPosition, 400)
@@ -78,7 +68,6 @@ const homeProjectsDesktop = () => {
   circles[0].addEventListener('click', () => scroll(projetUn))
   circles[1].addEventListener('click', () => scroll(projetDeux))
   circles[2].addEventListener('click', () => scroll(projetTrois))
-  circles[3].addEventListener('click', () => scroll(projetQuatre))
 
   gsap.to(circles[0], { backgroundColor: '#b40000' })
   function transformCircle(a, b) {
@@ -102,9 +91,6 @@ const homeProjectsDesktop = () => {
     barba.go('./royaumont')
   }
   function linkThree() {
-    barba.go('./durand')
-  }
-  function linkFour() {
     barba.go('./musique-de-chambre')
   }
   const button = document.querySelector('.discover-button')
@@ -113,8 +99,8 @@ const homeProjectsDesktop = () => {
   gsap.to(wrappers, {
     scrollTrigger: {
       trigger: section,
-      start: '24% top',
-      end: '30% top',
+      start: '27.5% top',
+      end: '33.5% top',
       scrub: true,
       onEnter: () => {
         button.removeEventListener('click', linkOne)
@@ -127,16 +113,16 @@ const homeProjectsDesktop = () => {
         transformCircle(1, 0)
       },
     },
-    yPercent: -25,
+    yPercent: -33.5,
   })
   gsap.fromTo(
     wrappers,
-    { yPercent: -25 },
+    { yPercent: -33.5 },
     {
       scrollTrigger: {
         trigger: section,
-        start: '44% top',
-        end: '50% top',
+        start: '61% top',
+        end: '67% top',
         scrub: true,
         onEnter: () => {
           button.removeEventListener('click', linkTwo)
@@ -149,30 +135,7 @@ const homeProjectsDesktop = () => {
           transformCircle(2, 1)
         },
       },
-      yPercent: -50,
-    }
-  )
-  gsap.fromTo(
-    wrappers,
-    { yPercent: -50 },
-    {
-      scrollTrigger: {
-        trigger: section,
-        start: '64% top',
-        end: '70% top',
-        scrub: true,
-        onEnter: () => {
-          button.removeEventListener('click', linkThree)
-          button.addEventListener('click', linkFour)
-          transformCircle(2, 3)
-        },
-        onEnterBack: () => {
-          button.removeEventListener('click', linkFour)
-          button.addEventListener('click', linkThree)
-          transformCircle(3, 2)
-        },
-      },
-      yPercent: -75,
+      yPercent: -67,
     }
   )
   gsap.set(wrappers, { yPercent: 0 })

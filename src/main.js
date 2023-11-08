@@ -134,24 +134,6 @@ barba.init({
       },
     },
     {
-      namespace: 'durand',
-      beforeEnter() {
-        mobHeight('.section-hero')
-      },
-      afterEnter() {
-        wordsFadeIn()
-        divsFadeIn()
-        linksOut()
-        navHover()
-        navBackground()
-        navMob()
-        footer()
-      },
-      afterLeave() {
-        navBackgroundClear()
-      },
-    },
-    {
       namespace: 'mdc',
       beforeEnter() {
         mobHeight('.section-hero')
@@ -249,7 +231,7 @@ barba.init({
     },
     {
       name: 'projects',
-      to: { namespace: ['solo', 'royaumont', 'durand', 'mdc'] },
+      to: { namespace: ['solo', 'royaumont', 'mdc'] },
       leave(data) {
         const done = this.async()
         leaveVids(data, done)
@@ -489,9 +471,6 @@ barba.init({
               enter(projectEnter)
               break
             case 'royaumont':
-              enter(projectEnter)
-              break
-            case 'durand':
               enter(projectEnter)
               break
             case 'mdc':

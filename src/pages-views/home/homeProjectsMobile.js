@@ -48,7 +48,7 @@ const homeProjectsMobile = () => {
       }
     },
     onLeft: () => {
-      if (per == -300 || active) {
+      if (per == -200 || active) {
         return
       } else {
         per -= 100
